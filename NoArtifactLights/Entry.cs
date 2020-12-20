@@ -23,7 +23,7 @@ using System.Reflection;
 
 namespace NoArtifactLights
 {
-	[ScriptAttributes(Author = "RelaperCrystal", SupportURL = "https://hotworkshop.atlassian.net/projects/NAL")]
+	[ScriptAttributes(Author = "RelaperCrystal")]
 	public class Entry : Script
 	{
 		private Pickup weapon;
@@ -40,7 +40,7 @@ namespace NoArtifactLights
 		private Logger logger = LogManager.GetLogger("Entry");
 		internal static bool forcestart;
 
-		public NALClient Client { get; private set; }
+		public static GameProcess Process { get; private set; }
 
 		public static void ForceStartEvent()
 		{
@@ -62,7 +62,7 @@ namespace NoArtifactLights
 				//Initializer.LoadProgram();
 
 
-				this.Client = new NALClient(Assembly.GetExecutingAssembly().GetName().Version);
+				Process = new GameProcess(Assembly.GetExecutingAssembly().GetName().Version);
 				this.Interval = 100;
 				this.Tick += Ticking1;
 				Common.Unload += Common_Unload1;
@@ -115,7 +115,7 @@ namespace NoArtifactLights
 			}
 		}
 
-		private void Ticking1(object sender, EventArgs e) => Client.Tick();
+		private void Ticking1(object sender, EventArgs e) => Process.Tick();
 
 		private void Common_Unload1(object sender, EventArgs e)
 		{

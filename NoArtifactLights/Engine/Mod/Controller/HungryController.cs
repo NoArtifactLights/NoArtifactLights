@@ -22,7 +22,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 	public static class HungryController
 	{
 		public static float Hungry { get; internal set; } = 10.0f;
-		public static float Water { get; private set; } = 10.0f;
+		public static float Water { get; internal set; } = 10.0f;
 
 		private static bool hinted = false;
 		private static Vector3[] resellers = { new Vector3(386.585f, -872.4678f, 29.2917f), new Vector3(194.2787f, -1764.063f, 29.321f), new Vector3(408.3806f, -1908.731f, 25.50163f) 

@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.8": {
-      "LemonUI.SHVDN3/1.0.0": {
+      "LemonUI.SHVDN3/1.2.0": {
         "type": "package",
         "dependencies": {
           "ScriptHookVDotNet3": "3.0.2"
@@ -12,6 +12,19 @@
         },
         "runtime": {
           "lib/net48/LemonUI.SHVDN3.dll": {}
+        }
+      },
+      "LiteDB/5.0.9": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net45/LiteDB.dll": {}
+        },
+        "runtime": {
+          "lib/net45/LiteDB.dll": {}
         }
       },
       "Newtonsoft.Json/12.0.3": {
@@ -75,7 +88,7 @@
       }
     },
     ".NETFramework,Version=v4.8/win": {
-      "LemonUI.SHVDN3/1.0.0": {
+      "LemonUI.SHVDN3/1.2.0": {
         "type": "package",
         "dependencies": {
           "ScriptHookVDotNet3": "3.0.2"
@@ -85,6 +98,19 @@
         },
         "runtime": {
           "lib/net48/LemonUI.SHVDN3.dll": {}
+        }
+      },
+      "LiteDB/5.0.9": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net45/LiteDB.dll": {}
+        },
+        "runtime": {
+          "lib/net45/LiteDB.dll": {}
         }
       },
       "Newtonsoft.Json/12.0.3": {
@@ -148,7 +174,7 @@
       }
     },
     ".NETFramework,Version=v4.8/win-x64": {
-      "LemonUI.SHVDN3/1.0.0": {
+      "LemonUI.SHVDN3/1.2.0": {
         "type": "package",
         "dependencies": {
           "ScriptHookVDotNet3": "3.0.2"
@@ -158,6 +184,19 @@
         },
         "runtime": {
           "lib/net48/LemonUI.SHVDN3.dll": {}
+        }
+      },
+      "LiteDB/5.0.9": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net45/LiteDB.dll": {}
+        },
+        "runtime": {
+          "lib/net45/LiteDB.dll": {}
         }
       },
       "Newtonsoft.Json/12.0.3": {
@@ -221,7 +260,7 @@
       }
     },
     ".NETFramework,Version=v4.8/win-x86": {
-      "LemonUI.SHVDN3/1.0.0": {
+      "LemonUI.SHVDN3/1.2.0": {
         "type": "package",
         "dependencies": {
           "ScriptHookVDotNet3": "3.0.2"
@@ -231,6 +270,19 @@
         },
         "runtime": {
           "lib/net48/LemonUI.SHVDN3.dll": {}
+        }
+      },
+      "LiteDB/5.0.9": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net45/LiteDB.dll": {}
+        },
+        "runtime": {
+          "lib/net45/LiteDB.dll": {}
         }
       },
       "Newtonsoft.Json/12.0.3": {
@@ -295,17 +347,37 @@
     }
   },
   "libraries": {
-    "LemonUI.SHVDN3/1.0.0": {
-      "sha512": "4WZePaPWTq1Y5DMBInEYlBofOWGCAeU/0Y4w59sUuPK4Og7pcyN7HHiv9v+k4QztWh7fBuB3jYHUXgnpBIqDjA==",
+    "LemonUI.SHVDN3/1.2.0": {
+      "sha512": "6TVP4LNy4Ye4lwlZkSVh9m27Bymfma2KmSvP0SBg3ZPvrVqEpATFDyoAaq/5dERFzlwq/bbkwK0+hiSwmpH16Q==",
       "type": "package",
-      "path": "lemonui.shvdn3/1.0.0",
+      "path": "lemonui.shvdn3/1.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lemonui.shvdn3.1.0.0.nupkg.sha512",
+        "lemonui.shvdn3.1.2.0.nupkg.sha512",
         "lemonui.shvdn3.nuspec",
         "lib/net48/LemonUI.SHVDN3.dll",
         "lib/net48/LemonUI.SHVDN3.xml"
+      ]
+    },
+    "LiteDB/5.0.9": {
+      "sha512": "cWnNWXL+qaP/qrkUCYZHBUJcv+IsfJfofa+Ed4EyT0zs/gkXqfKvjTbS3uSMBfcd9I7Yf+q9YPmCpmVFrVGQtw==",
+      "type": "package",
+      "path": "litedb/5.0.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "AppVeyorSettings.json",
+        "LICENSE",
+        "icon_64x64.png",
+        "lib/net45/LiteDB.dll",
+        "lib/net45/LiteDB.xml",
+        "lib/netstandard1.3/LiteDB.dll",
+        "lib/netstandard1.3/LiteDB.xml",
+        "lib/netstandard2.0/LiteDB.dll",
+        "lib/netstandard2.0/LiteDB.xml",
+        "litedb.5.0.9.nupkg.sha512",
+        "litedb.nuspec"
       ]
     },
     "Newtonsoft.Json/12.0.3": {
@@ -407,7 +479,8 @@
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
       "CommandPlus >= 0.1.1",
-      "LemonUI.SHVDN3 >= 1.0.0",
+      "LemonUI.SHVDN3 >= 1.2.0",
+      "LiteDB >= 5.0.9",
       "NLog >= 4.7.5",
       "NLog.Schema >= 4.7.4",
       "Newtonsoft.Json >= 12.0.3",
@@ -454,7 +527,11 @@
         "dependencies": {
           "LemonUI.SHVDN3": {
             "target": "Package",
-            "version": "[1.0.0, )"
+            "version": "[1.2.0, )"
+          },
+          "LiteDB": {
+            "target": "Package",
+            "version": "[5.0.9, )"
           },
           "NLog": {
             "target": "Package",

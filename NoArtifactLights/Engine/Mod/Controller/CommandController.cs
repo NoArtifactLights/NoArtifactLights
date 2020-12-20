@@ -18,12 +18,18 @@ namespace NoArtifactLights.Engine.Mod.Controller
 		#region Command Definitions
 
 		private static SetHungryCommand setHungry = new SetHungryCommand();
+		private static HealCommand heal = new HealCommand();
+		private static SetDehydrationCommand dehydration = new SetDehydrationCommand();
+		private static ForceEventCommand forceEvent = new ForceEventCommand();
 
 		#endregion
 
 		internal static void Init()
 		{
-			control.Register("sethungry", setHungry);
+			control.Register("hungry", setHungry);
+			control.Register("heal", heal);
+			control.Register("dehydration", dehydration);
+			control.Register("forceEvent", forceEvent);
 		}
 
 		internal static void Run(string str)
