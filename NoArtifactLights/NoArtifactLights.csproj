@@ -70,7 +70,7 @@
   <ItemGroup>
     <Compile Include="Cilent\GameProcess.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="Engine\Data\DatabaseManager.cs" />
+    <Compile Include="Engine\Data\DataHelper.cs" />
     <Compile Include="Engine\Entities\Enums\Difficulty.cs" />
     <Compile Include="Engine\Entities\Enums\Permission.cs" />
     <Compile Include="Engine\Entities\IExecutor.cs" />
@@ -82,6 +82,7 @@
     <Compile Include="Engine\Entities\Structures\LastSaveFile.cs" />
     <Compile Include="Engine\Mod\Commands\ForceEventCommand.cs" />
     <Compile Include="Engine\Mod\Commands\HealCommand.cs" />
+    <Compile Include="Engine\Mod\Commands\SetDehydrationCommand.cs" />
     <Compile Include="Engine\Mod\Commands\SetHungryCommand.cs" />
     <Compile Include="Engine\Mod\Controller\CommandController.cs" />
     <Compile Include="Engine\Mod\Controller\HungryController.cs" />
@@ -123,23 +124,24 @@
     <Compile Include="Engine\Entities\Structures\WorldStatus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LemonUI.SHVDN3">
-      <Version>1.2.0</Version>
-    </PackageReference>
+    <Reference Include="..\References\ScriptHookVDotNet3.dll">
+    </Reference>
+    <Reference Include="..\References\LemonUI.SHVDN3.dll">
+    </Reference>
     <PackageReference Include="LiteDB">
       <Version>5.0.9</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json.Bson">
+      <Version>1.0.2</Version>
+    </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.7.5</Version>
     </PackageReference>
     <PackageReference Include="NLog.Schema">
       <Version>4.7.4</Version>
-    </PackageReference>
-    <PackageReference Include="ScriptHookVDotNet3">
-      <Version>3.0.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -164,10 +166,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engine\Entities\Extentions\" />
-    <Folder Include="Engine\Entities\Scripts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="nal.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

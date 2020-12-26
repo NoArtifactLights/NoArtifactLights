@@ -44,6 +44,16 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		private NativeItem itemDefaultModel;
 		private NativeItem itemCopModel;
 
+		private NativeMenu saveMenu;
+		private NativeItem itemSaveSlot1;
+		private NativeItem itemSaveSlot2;
+		private NativeItem itemSaveSlot3;
+
+		private NativeMenu loadMenu;
+		private NativeItem itemLoadSlot1;
+		private NativeItem itemLoadSlot2;
+		private NativeItem itemLoadSlot3;
+
 		private NativeMenu buyMenu;
 		private NativeItem itemPistol;
 		private NativeItem itemPumpShotgun;
@@ -117,6 +127,10 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				modelMenu.Add(itemCopModel);
 				itemDefaultModel.Activated += ItemDefaultModel_Activated;
 				itemCopModel.Activated += ItemCopModel_Activated;
+
+				saveMenu = new NativeMenu(Strings.MenuSaveHeader, "SAVE");
+				itemSaveSlot1 = new NativeItem(string.Format(Strings.MenuSaveItem, 1), Strings.MenuSaveItemSubtitle);
+				itemSaveSlot2 = new NativeItem(string.Format(Strings.MenuSaveItem, 2), Strings.MenuSaveItemSubtitle);
 
 				foodMenu = new NativeMenu("Food", Strings.MenuFoodShopSubtitle);
 

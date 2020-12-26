@@ -330,6 +330,15 @@
   <data name="MenuModel" xml:space="preserve">
     <value>玩家模型 </value>
   </data>
+  <data name="MenuSaveHeader" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="MenuSaveItem" xml:space="preserve">
+    <value>位置 {0}</value>
+  </data>
+  <data name="MenuSaveItemSubtitle" xml:space="preserve">
+    <value>将当前游戏状态保存到此位置。</value>
+  </data>
   <data name="NoModelWarning" xml:space="preserve">
     <value>~r~警告~s~: 必须与~b~BV1C7411c7Ss~s~提供的下载配套使用否则玩家死亡后会卡在黑屏。</value>
   </data>

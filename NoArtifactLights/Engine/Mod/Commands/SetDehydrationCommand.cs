@@ -11,7 +11,7 @@ using NoArtifactLights.Engine.Mod.Controller;
 
 namespace NoArtifactLights.Engine.Mod.Commands
 {
-	internal class SetDehydrationCommand : Command
+	public class SetDehydrationCommand : Command
 	{
 		public SetDehydrationCommand()
 		{
