@@ -718,6 +718,33 @@ namespace NoArtifactLights.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Load 的本地化字符串。
+        /// </summary>
+        public static string MenuLoadHeader {
+            get {
+                return ResourceManager.GetString("MenuLoadHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Loads the game status from this slot. 的本地化字符串。
+        /// </summary>
+        public static string MenuLoadItemSubtitle {
+            get {
+                return ResourceManager.GetString("MenuLoadItemSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 LOAD GAME 的本地化字符串。
+        /// </summary>
+        public static string MenuLoadSubtitle {
+            get {
+                return ResourceManager.GetString("MenuLoadSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Main Menu 的本地化字符串。
         /// </summary>
         public static string MenuMainTitle {

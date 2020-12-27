@@ -318,6 +318,15 @@
   <data name="MenuFoodShopSubtitle" xml:space="preserve">
     <value>食品商店</value>
   </data>
+  <data name="MenuLoadHeader" xml:space="preserve">
+    <value>加载</value>
+  </data>
+  <data name="MenuLoadItemSubtitle" xml:space="preserve">
+    <value>从此位置加载游戏。</value>
+  </data>
+  <data name="MenuLoadSubtitle" xml:space="preserve">
+    <value>加载游戏</value>
+  </data>
   <data name="MenuMainTitle" xml:space="preserve">
     <value>主菜单</value>
   </data>

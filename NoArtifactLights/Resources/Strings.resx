@@ -336,6 +336,15 @@
   <data name="MenuFoodShopSubtitle" xml:space="preserve">
     <value>Food Shop</value>
   </data>
+  <data name="MenuLoadHeader" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="MenuLoadItemSubtitle" xml:space="preserve">
+    <value>Loads the game status from this slot.</value>
+  </data>
+  <data name="MenuLoadSubtitle" xml:space="preserve">
+    <value>LOAD GAME</value>
+  </data>
   <data name="MenuMainTitle" xml:space="preserve">
     <value>Main Menu</value>
   </data>
