@@ -417,7 +417,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		//	Notification.Show(Strings.GameLoaded);
 		//}
 
-		p/*rivate void ItemSave_Activated(object sender, EventArgs args) => SaveController.Save(itemLights.Checked);*/
+		/*private void ItemSave_Activated(object sender, EventArgs args) => SaveController.Save(itemLights.Checked);*/
 
 		private void ItemLights_CheckboxEvent(object sender, EventArgs args)
 		{
