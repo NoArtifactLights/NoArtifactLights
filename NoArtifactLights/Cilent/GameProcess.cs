@@ -23,6 +23,7 @@ namespace NoArtifactLights.Cilent
 		internal static HandleableList killedPeds = new HandleableList();
 		internal static HandleableList weaponedPeds = new HandleableList();
 
+		internal static Ped current;
 		public Version Version { get; }
 		private Logger logger = LogManager.GetLogger("Client");
 		private bool forcestart;
@@ -47,8 +48,10 @@ namespace NoArtifactLights.Cilent
 			logger.Info("Starting Command Client...");
 			sw.Stop();
 
+			Functions.TriggerInitialize(this);
+
 			Common.OnLaunch(this);
-			logger.Info("DONE! Client construction took " + sw.ElapsedMilliseconds);
+			logger.Info("DONE! Client construction took " + sw.ElapsedMilliseconds + " ms");
 		}
 
 		internal void Tick()
@@ -122,12 +125,7 @@ namespace NoArtifactLights.Cilent
 						continue;
 					}
 					peds1.Add(ped);
-					EventController.Process();
-					if (new Random().Next(9, 89) == 10 || forcestart == true)
-					{
-						forcestart = false;
-						EventController.StartRandomEvent(ped);
-					}
+					Functions.TriggerPed(this, ped);
 				}
 
 				if (killedPeds.Count >= 6000)
@@ -142,6 +140,7 @@ namespace NoArtifactLights.Cilent
 				{
 					peds1.Clear();
 				}
+				Functions.TriggerTick(this);
 			}
 			catch (Exception ex)
 			{

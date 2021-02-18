@@ -406,7 +406,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 			Function.Call(Hash.CREATE_INCIDENT, 7, Game.Player.Character.Position.X, Game.Player.Character.Position.Y, Game.Player.Character.Position.Z, 2, 3.0f, new OutputArgument());
 		}
 
-		//private void ItemLoad_Activated(object sender, EventArgs args)
+		//private void ItemLoad_Activated(object sender, EventArgs arguments)
 		//{
 		//	SaveController.Load();
 		//	itemLights.Checked = Common.blackout;
@@ -417,7 +417,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		//	Notification.Show(Strings.GameLoaded);
 		//}
 
-		/*private void ItemSave_Activated(object sender, EventArgs args) => SaveController.Save(itemLights.Checked);*/
+		/*private void ItemSave_Activated(object sender, EventArgs arguments) => SaveController.Save(itemLights.Checked);*/
 
 		private void ItemLights_CheckboxEvent(object sender, EventArgs args)
 		{

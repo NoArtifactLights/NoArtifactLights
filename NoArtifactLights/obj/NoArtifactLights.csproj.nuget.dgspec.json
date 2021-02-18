@@ -22,8 +22,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\Ender\\AppData\\Roaming\\Cosmos User Kit\\packages\\": {},
           "https://api.nuget.org/v3/index.json": {},
-          "https://mirrors.huaweicloud.com/repository/nuget/v3/index.json": {}
+          "https://mirrors.huaweicloud.com/repository/nuget/v3/index.json": {},
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "netstandard2.0": {
@@ -58,7 +60,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -81,8 +83,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\Ender\\AppData\\Roaming\\Cosmos User Kit\\packages\\": {},
           "https://api.nuget.org/v3/index.json": {},
-          "https://mirrors.huaweicloud.com/repository/nuget/v3/index.json": {}
+          "https://mirrors.huaweicloud.com/repository/nuget/v3/index.json": {},
+          "https://www.nuget.org/api/v2/": {}
         },
         "frameworks": {
           "net48": {
@@ -97,6 +101,10 @@
       "frameworks": {
         "net48": {
           "dependencies": {
+            "LemonUI.SHVDN3": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
             "LiteDB": {
               "target": "Package",
               "version": "[5.0.9, )"
@@ -107,7 +115,7 @@
             },
             "NLog.Schema": {
               "target": "Package",
-              "version": "[4.7.4, )"
+              "version": "[4.7.7, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
@@ -116,6 +124,14 @@
             "Newtonsoft.Json.Bson": {
               "target": "Package",
               "version": "[1.0.2, )"
+            },
+            "PlayerCompanion": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "ScriptHookVDotNet3": {
+              "target": "Package",
+              "version": "[3.1.0, )"
             }
           }
         }

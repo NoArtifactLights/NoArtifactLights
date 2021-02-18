@@ -48,15 +48,22 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, (int)relation, group1, group2);
 		}
 
+		internal static void CheckForDependencies()
+		{
+			if (!File.Exists("scripts\\PlayerCompanion.dll"))
+			{
+				Notification.Show("~h~r~WARNING~w~~n~PlayerCompanion is required for several things to function. If you don't install it, the mod is most likely gonna crash.");
+				Notification.Show("PlayerCompanion is ~h~not~w~ bundled. You needs to download and install it manually. See log for links.");
+				logger.Warn("PlayerCompanion does not exist. Download it here: https://www.gta5-mods.com/scripts/playercompanion");
+			}
+		}
+
 		public static void SetRelationship(Difficulty difficulty)
 		{
 			SetRelationshipBetGroupsUInt(Relationship.Hate, 0x02B8FA80, 0x47033600);
 			SetRelationshipBetGroupsUInt(Relationship.Hate, 0x47033600, 0x02B8FA80);
 			switch (difficulty)
 			{
-				default:
-				case Difficulty.Initial:
-					break;
 				case Difficulty.Easy:
 					SetRelationshipBetGroupsUInt(Relationship.Hate, 0xA49E591C, 0x02B8FA80);
 					SetRelationshipBetGroupsUInt(Relationship.Hate, 0x02B8FA80, 0xA49E591C);
