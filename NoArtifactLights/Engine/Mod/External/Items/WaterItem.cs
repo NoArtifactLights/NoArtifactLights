@@ -1,11 +1,6 @@
 ﻿// NoArtifactLights
 // (C) RelaperCrystal and contributors. Licensed under GPLv3 or later.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LemonUI.Elements;
 using NoArtifactLights.Engine.Mod.Controller;
 using NoArtifactLights.Resources;

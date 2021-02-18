@@ -8,8 +8,10 @@ using GTA.Math;
 using GTA.UI;
 using LemonUI.Menus;
 using NoArtifactLights.Engine.Mod.API;
+using NoArtifactLights.Engine.Mod.External.Items;
 using NoArtifactLights.Engine.Mod.Scripts;
 using NoArtifactLights.Resources;
+using PlayerCompanion;
 
 namespace NoArtifactLights.Engine.Mod.Controller
 {
@@ -66,7 +68,8 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			result.AltTitle = "$" + price.ToString();
 			result.Activated += (s, i) =>
 			{
-				RefillWaterBySale(price);
+				if (!Common.Cost(price)) return;
+				Companion.Inventories.Current.Add(new WaterItem());
 			};
 			return result;
 		}

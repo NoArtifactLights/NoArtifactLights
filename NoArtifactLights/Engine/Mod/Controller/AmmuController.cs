@@ -1,12 +1,14 @@
 ﻿// NoArtifactLights
 // (C) RelaperCrystal and contributors. Licensed under GPLv3 or later.
 
+using System;
 using GTA;
 using GTA.Math;
 using GTA.UI;
 using LemonUI.Menus;
 using NLog;
 using NoArtifactLights.Resources;
+using PlayerCompanion;
 
 namespace NoArtifactLights.Engine.Mod.Controller
 {
@@ -41,17 +43,17 @@ namespace NoArtifactLights.Engine.Mod.Controller
 				if (Game.Player.Character.Weapons.HasWeapon(weapon))
 				{
 					Game.Player.Character.Weapons[weapon].Ammo += ammo;
-					Common.weaponSaving.RegisterWeapon(weapon);
+					Companion.Weapons.Current.Populate();
 				}
 				else
 				{
-					Common.weaponSaving.GiveAndRegisterWeapon(weapon, ammo, true);
-
+					Game.Player.Character.Weapons.Give(weapon, ammo, true, true);
+					Companion.Weapons.Current.Populate();
 				}
 			}
-			catch
+			catch (Exception ex)
 			{
-				
+				logger.Error(ex);
 			}
 
 		}

@@ -159,8 +159,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			Common.blackout = sf.Blackout;
 			Game.Player.Character.Position = new GTA.Math.Vector3(sf.PlayerX, sf.PlayerY, sf.PlayerZ);
 			Common.counter = sf.Kills;
-			Common.Cash = sf.Cash;
-			Common.Bank = sf.Bank;
 			Common.difficulty = sf.CurrentDifficulty;
 			GameController.SetRelationship(sf.CurrentDifficulty);
 			Game.Player.Character.Weapons.RemoveAll();
@@ -170,7 +168,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 				Game.Player.Character.Health = sf.PlayerHealth;
 			}
 			Game.Player.Character.Armor = sf.PlayerArmor;
-			Common.weaponSaving.FromSerializationWeapons(sf.Weapons);
 		}
 
 		internal static void Save(bool blackout, int slot)
@@ -185,14 +182,10 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			sf.Blackout = blackout;
 			sf.Kills = Common.counter;
 			sf.CurrentDifficulty = Common.difficulty;
-			sf.Cash = Common.Cash;
-			sf.Bank = Common.Bank;
 			sf.PlayerHealth = Game.Player.Character.Health;
 			sf.PlayerArmor = Game.Player.Character.Armor;
 			sf.PlayerHungry = HungryController.Hungry;
 			sf.PlayerHydration = HungryController.Water;
-
-			sf.Weapons = Common.weaponSaving.GetSerializationWeapons();
 
 			SaveGameFile(sf, slot);
 		}
@@ -200,8 +193,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 		internal static SaveFile UpdateSaveFile(LastSaveFile lsf)
 		{
 			SaveFile result = new SaveFile();
-			result.Bank = lsf.Bank;
-			result.Cash = lsf.Cash;
 			result.Blackout = lsf.Blackout;
 			result.CurrentDifficulty = lsf.CurrentDifficulty;
 			result.Kills = lsf.Kills;
@@ -215,7 +206,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			result.PlayerZ = lsf.PlayerZ;
 			result.Status = lsf.Status;
 			result.Version = saveVersion;
-			result.Weapons = lsf.Weapons;
 			return result;
 		}
 	}

@@ -10,6 +10,10 @@ using NLog;
 using NoArtifactLights.Engine.Mod.Controller;
 using NoArtifactLights.Engine.Mod.API.Events;
 using NoArtifactLights.Engine.Entities.Enums;
+using System.IO;
+using NoArtifactLights.Resources;
+using PlayerCompanion;
+using System.Drawing;
 
 namespace NoArtifactLights.Engine.Process
 {
@@ -39,11 +43,17 @@ namespace NoArtifactLights.Engine.Process
 			Game.Player.Character.Position = new Vector3(459.8501f, -1001.404f, 24.91487f);
 			logger.Trace("Setting relationship and game settings");
 			GameController.SetRelationship(Difficulty.Initial);
+			if (!File.Exists("PlayerCompanion\\Colors.json") || File.ReadAllText("PlayerCompanion\\Colors.json") == "{}")
+			{
+				File.WriteAllText("PlayerCompanion\\Colors.json", Dependents.CompanionColorsConfig);
+			}
+
 			Game.MaxWantedLevel = 0;
 			Game.Player.IgnoredByPolice = true;
 			Game.Player.ChangeModel("a_m_m_bevhills_02");
-			Game.Player.Character.Weapons.Give(WeaponHash.Flashlight, 1, true, true);
-			Common.weaponSaving.GiveAndRegisterWeapon(WeaponHash.Pistol, 50, false);
+
+			Companion.Colors.Current = Color.FromArgb(255, 0, 114, 188);
+
 			Screen.FadeIn(1000);
 			EventController.RegisterEvent(typeof(ArmedPed));
 			EventController.RegisterEvent(typeof(StealCar));

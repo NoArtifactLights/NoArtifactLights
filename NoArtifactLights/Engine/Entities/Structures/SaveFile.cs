@@ -17,10 +17,7 @@ namespace NoArtifactLights.Engine.Entities.Structures
 		public bool Blackout { get; set; }
 		public Difficulty CurrentDifficulty { get; set; }
 		public int Kills { get; set; }
-		public int Cash { get; set; }
-		public int Bank { get; set; }
 		public string Model { get; set; }
-		public SaveWeapon[] Weapons { get; set; }
 		public int PlayerArmor { get; set; }
 		public int PlayerHealth { get; set; }
 		public float PlayerHungry { get; set; }
