@@ -17,7 +17,6 @@ namespace NoArtifactLights
 		internal static Difficulty difficulty = Difficulty.Initial;
 		internal static bool blackout;
 		internal static NLog.Logger logger = LogManager.GetLogger("Common");
-		internal static readonly WeaponSavingController weaponSaving = new WeaponSavingController();
 		internal static event EventHandler Unload;
 
 		//internal static int intervalToRespawn;

@@ -89,7 +89,9 @@
     <Compile Include="Engine\Mod\Controller\HungryController.cs" />
     <Compile Include="Engine\Mod\Controller\RespawnController.cs" />
     <Compile Include="Engine\Mod\Controller\WeaponSavingController.cs" />
+    <Compile Include="Engine\Mod\External\Items\ChickenItem.cs" />
     <Compile Include="Engine\Mod\External\Items\HamburgerItem.cs" />
+    <Compile Include="Engine\Mod\External\Items\WaterItem.cs" />
     <Compile Include="Engine\Mod\Scripts\HungryScript.cs" />
     <Compile Include="Engine\Mod\Scripts\Respawner.cs" />
     <Compile Include="Engine\Process\Initializer.cs" />
@@ -115,6 +117,11 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Dependents.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dependents.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -156,6 +163,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Dependents.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dependents.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
@@ -180,6 +191,7 @@
     <Content Include="nal.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\CompanionColorsConfig.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommandPlus\CommandPlus\CommandPlus.csproj">

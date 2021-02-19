@@ -43,10 +43,6 @@ namespace NoArtifactLights.Engine.Process
 			Game.Player.Character.Position = new Vector3(459.8501f, -1001.404f, 24.91487f);
 			logger.Trace("Setting relationship and game settings");
 			GameController.SetRelationship(Difficulty.Initial);
-			if (!File.Exists("PlayerCompanion\\Colors.json") || File.ReadAllText("PlayerCompanion\\Colors.json") == "{}")
-			{
-				File.WriteAllText("PlayerCompanion\\Colors.json", Dependents.CompanionColorsConfig);
-			}
 
 			Game.MaxWantedLevel = 0;
 			Game.Player.IgnoredByPolice = true;

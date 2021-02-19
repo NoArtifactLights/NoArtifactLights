@@ -76,6 +76,6 @@ namespace NoArtifactLights.Engine.Mod.API
 			SelectPed(sender, p);
 		}
 
-		internal static void TriggerInitialize(GameProcess sender) => Initialize(sender, new EventArgs());
+		internal static void TriggerInitialize(GameProcess sender) => Initialize?.Invoke(sender, new EventArgs());
 	}
 }
