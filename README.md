@@ -16,6 +16,7 @@ For built versions, do not copy the DLL file of the PlayerCompanion directly. Do
 ## Contributing
 
 You can either *report issues* or *contribute codes*.
+
     1. Clone / fork the repository.
     2. Make commit to your fork.
     3. Sent the commits back in pull request.
