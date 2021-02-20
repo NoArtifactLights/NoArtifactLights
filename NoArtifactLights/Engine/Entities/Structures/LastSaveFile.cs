@@ -26,5 +26,6 @@ namespace NoArtifactLights.Engine.Entities.Structures
 		public int PlayerArmor { get; set; }
 		public int PlayerHealth { get; set; }
 		public float PlayerHungry { get; set; }
+		public float PlayerHydration { get; set; }
 	}
 }

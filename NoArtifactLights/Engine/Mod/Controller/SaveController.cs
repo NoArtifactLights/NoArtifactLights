@@ -20,10 +20,10 @@ namespace NoArtifactLights.Engine.Mod.Controller
 {
 	internal static class SaveController
 	{
-		private static Logger logger = LogManager.GetLogger("SaveController");
-		private const string savePath = "NAL\\game.dat";
-		private const int saveVersion = 6;
-		private const int saveLastVersion = 5;
+		private static readonly Logger logger = LogManager.GetLogger("SaveController");
+		private const string SaveFilePath = "NAL\\game.dat";
+		private const int SaveVersion = 7;
+		private const int LastSaveVersion = -1;
 
 		internal static void CheckAndFixDataFolder()
 		{
@@ -43,20 +43,21 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			sw.Start();
 			try
 			{
-				
 				string tempPath = "NAL\\temp\\raw.dat";
-				FileStream fs = File.Create(tempPath);
+				var fs = File.Create(tempPath);
 
 				logger.Info("Stream opened");
 
-				using (BsonWriter writer = new BsonWriter(fs))
+#pragma warning disable CS0618
+				using (var writer = new BsonWriter(fs))
+#pragma warning restore CS0618
 				{
 					logger.Info("Writing to BSON");
 					JsonSerializer serializer = new JsonSerializer();
 					serializer.Serialize(writer, sf);
 				}
 
-				string savePath = $"NAL\\saves\\{slot}.dat";
+				var savePath = $"NAL\\saves\\{slot}.dat";
 
 				if (File.Exists(savePath))
 				{
@@ -93,7 +94,9 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			SaveFile result;
 
 			FileStream fs = File.OpenRead("NAL\\temp\\raw.dat");
-			using (BsonReader br = new BsonReader(fs))
+#pragma warning disable CS0618
+			using (var br = new BsonReader(fs))
+#pragma warning restore CS0618
 			{
 				JsonSerializer serializer = new JsonSerializer();
 				result = serializer.Deserialize<SaveFile>(br);
@@ -107,7 +110,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 		{
 			if (Directory.Exists("NAL\\temp"))
 			{
-				logger.Info("Overwritten temponary files");
+				logger.Info("Overwritten temporary files");
 				Directory.Delete("NAL\\temp", true);
 			}
 
@@ -117,12 +120,12 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			byte[] jsonBytes = Convert.FromBase64String(datBase64);
 			string json = Encoding.UTF8.GetString(jsonBytes);
 
-			DefaultContractResolver contractResolver = new DefaultContractResolver
+			var contractResolver = new DefaultContractResolver
 			{
 				NamingStrategy = new SnakeCaseNamingStrategy()
 			};
 
-			LastSaveFile result = JsonConvert.DeserializeObject<LastSaveFile>(json, new JsonSerializerSettings
+			var result = JsonConvert.DeserializeObject<LastSaveFile>(json, new JsonSerializerSettings
 			{
 				ContractResolver = contractResolver,
 				Formatting = Formatting.None
@@ -137,15 +140,17 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			CheckAndFixDataFolder();
 			SaveFile sf;
 			LastSaveFile lsf;
-			if (!File.Exists(savePath))
+
+			if (!File.Exists(SaveFilePath))
 			{
 				Notification.Show(Strings.NoSave);
 				return;
 			}
+
 			sf = LoadGameFile(slot);
-			if (sf.Version != saveVersion)
+			if (sf.Version != SaveVersion)
 			{
-				if(sf.Version == saveLastVersion)
+				if (sf.Version == LastSaveVersion)
 				{
 					lsf = LoadOldSave();
 					sf = UpdateSaveFile(lsf);
@@ -153,6 +158,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 				Notification.Show(Strings.SaveVersion);
 				return;
 			}
+
 			World.Weather = sf.Status.CurrentWeather;
 			World.CurrentTimeOfDay = new TimeSpan(sf.Status.Hour, sf.Status.Minute, 0);
 			Function.Call(Hash.SET_ARTIFICIAL_LIGHTS_STATE, sf.Blackout);
@@ -163,7 +169,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			GameController.SetRelationship(sf.CurrentDifficulty);
 			Game.Player.Character.Weapons.RemoveAll();
 			Game.Player.Character.Weapons.Give(WeaponHash.Flashlight, 1, false, true);
-			if(sf.PlayerHealth > 0)
+			if (sf.PlayerHealth > 0)
 			{
 				Game.Player.Character.Health = sf.PlayerHealth;
 			}
@@ -174,7 +180,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 		{
 			CheckAndFixDataFolder();
 			SaveFile sf = new SaveFile();
-			sf.Version = saveVersion;
+			sf.Version = SaveVersion;
 			sf.Status = new WorldStatus(World.Weather, World.CurrentTimeOfDay.Hours, World.CurrentTimeOfDay.Minutes);
 			sf.PlayerX = Game.Player.Character.Position.X;
 			sf.PlayerY = Game.Player.Character.Position.Y;
@@ -205,7 +211,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			result.PlayerY = lsf.PlayerY;
 			result.PlayerZ = lsf.PlayerZ;
 			result.Status = lsf.Status;
-			result.Version = saveVersion;
+			result.Version = SaveVersion;
 			return result;
 		}
 	}
