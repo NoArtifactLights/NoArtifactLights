@@ -22,7 +22,7 @@ namespace NoArtifactLights.Engine.Process
 		private static bool isLoaded = false;
 		private static bool isLoading = false;
 
-		private static Logger logger = LogManager.GetLogger("Initializer");
+		private static readonly Logger logger = LogManager.GetLogger("Initializer");
 
 		internal static void LoadProgram()
 		{
@@ -36,7 +36,7 @@ namespace NoArtifactLights.Engine.Process
 
 			// START INITIAL LOADING PROCESS
 
-			logger.Trace("Loading multiplayer maps");
+			logger.Trace("Loading multi-player maps");
 			Function.Call(Hash._LOAD_MP_DLC_MAPS);
 			Function.Call(Hash._USE_FREEMODE_MAP_BEHAVIOR, true);
 			logger.Trace("Setting player position and giving weapons");
@@ -48,9 +48,10 @@ namespace NoArtifactLights.Engine.Process
 			Game.Player.IgnoredByPolice = true;
 			Game.Player.ChangeModel("a_m_m_bevhills_02");
 
-			Notification.Show("~y~~h~HINT~w~You can now set the color of the a_m_m_bevhills_02 to 0, 114, 118.");
+			Notification.Show("~y~~h~HINT~w~You can now set the color of the a_m_m_bevhills_02 to R=0, G=114, B=118.");
 
 			Screen.FadeIn(1000);
+			logger.Trace("Registering events");
 			EventController.RegisterEvent(typeof(ArmedPed));
 			EventController.RegisterEvent(typeof(StealCar));
 
