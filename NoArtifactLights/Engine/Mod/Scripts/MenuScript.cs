@@ -61,9 +61,9 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		private NativeItem itemHamburger;
 		private NativeItem itemWater;
 
-		Blip repairBlip;
+		private Blip repairBlip;
 
-		private TimerBarCollection timerBars = new TimerBarCollection();
+		private static readonly TimerBarCollection timerBars = new TimerBarCollection();
 		internal TimerBarProgress hungryBar = new TimerBarProgress(Strings.BarHungry);
 		internal TimerBarProgress waterBar = new TimerBarProgress(Strings.BarWater);
 		private Vector3 repair = new Vector3(140.683f, -1081.387f, 28.56039f);
@@ -80,12 +80,11 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 			instance.waterBar.ForegroundColor = cl;
 		}
 
-		private NLog.Logger logger = LogManager.GetLogger("MenuScript");
+		private static readonly NLog.Logger logger = LogManager.GetLogger("MenuScript");
 
 		public MenuScript()
 		{
 			Common.Start += Common_Start;
-			
 		}
 
 		private void Common_Start(object sender, EventArgs e)
@@ -125,20 +124,9 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				itemSaveSlot2 = new NativeItem(string.Format(Strings.MenuSaveItem, 2), Strings.MenuSaveItemSubtitle);
 				itemSaveSlot3 = new NativeItem(string.Format(Strings.MenuSaveItem, 3), Strings.MenuSaveItemSubtitle);
 
-				itemSaveSlot1.Activated += (menu, i) =>
-				{
-					SaveController.Save(Common.blackout, 1);
-				};
-
-				itemSaveSlot2.Activated += (menu, i) =>
-				{
-					SaveController.Save(Common.blackout, 2);
-				};
-
-				itemSaveSlot3.Activated += (menu, i) =>
-				{
-					SaveController.Save(Common.blackout, 3);
-				};
+				itemSaveSlot1.Activated += (menu, i) => SaveController.Save(Common.blackout, 1);
+				itemSaveSlot2.Activated += (menu, i) => SaveController.Save(Common.blackout, 2);
+				itemSaveSlot3.Activated += (menu, i) => SaveController.Save(Common.blackout, 3);
 
 				saveMenu.Add(itemSaveSlot1);
 				saveMenu.Add(itemSaveSlot2);
@@ -150,20 +138,9 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				itemLoadSlot2 = new NativeItem(string.Format(Strings.MenuSaveItem, 2), Strings.MenuLoadItemSubtitle);
 				itemLoadSlot3 = new NativeItem(string.Format(Strings.MenuSaveItem, 3), Strings.MenuLoadItemSubtitle);
 
-				itemLoadSlot1.Activated += (menu, i) =>
-				{
-					SaveController.Load(1);
-				};
-
-				itemLoadSlot2.Activated += (menu, i) =>
-				{
-					SaveController.Load(2);
-				};
-
-				itemLoadSlot3.Activated += (menu, i) =>
-				{
-					SaveController.Load(3);
-				};
+				itemLoadSlot1.Activated += (menu, i) => SaveController.Load(1);
+				itemLoadSlot2.Activated += (menu, i) => SaveController.Load(2);
+				itemLoadSlot3.Activated += (menu, i) => SaveController.Load(3);
 
 				loadMenu.Add(itemLoadSlot1);
 				loadMenu.Add(itemLoadSlot2);
@@ -224,8 +201,11 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				itemPistol = AmmuController.GenerateWeaponSellerItem(Strings.AmmuPistol, Strings.AmmuPistolSubtitle, 100);
 				itemPumpShotgun = AmmuController.GenerateWeaponSellerItem(Strings.AmmuPumpShotgun, Strings.AmmuPumpShotgunSubtitle, 200);
 				itemCarbineRifle = AmmuController.GenerateWeaponSellerItem(Strings.AmmuCarbineRifle, Strings.AmmuCarbineRifleSubtitle, 350);
-				itemBodyArmor = new NativeItem(Strings.WeaponBodyArmor, Strings.WeaponBodyArmorDescription);
-				itemBodyArmor.AltTitle = "$380";
+
+				itemBodyArmor = new NativeItem(Strings.WeaponBodyArmor, Strings.WeaponBodyArmorDescription)
+				{
+					AltTitle = "$380"
+				};
 				logger.Trace("Instances created");
 				buyMenu.Add(itemPistol);
 				buyMenu.Add(itemPumpShotgun);
@@ -249,7 +229,9 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				this.Aborted += MenuScript_Aborted;
 				CommandController.Init();
 			}
+#pragma warning disable CA1031
 			catch (Exception ex)
+#pragma warning restore CA1031
 			{
 				GameUI.DisplayHelp(Strings.ExceptionMenu);
 				logger.Fatal(ex, "Error while loading menu");
@@ -275,19 +257,20 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 			{
 				CommandController.Run(str);
 			}
-			catch(UnexceptedValueException uvex)
+			catch (UnexceptedValueException uvex)
 			{
 				Notification.Show(uvex.Message);
 			}
-			catch(Exception ex)
+#pragma warning disable CA1031 // Do not catch general exception types
+			catch (Exception ex)
 			{
 				Notification.Show(ex.ToString());
 			}
+#pragma warning restore CA1031 // Do not catch general exception types
 			finally
 			{
 				logger.Info("User typed command: " + str);
 			}
-
 		}
 
 		private void ItemCopModel_Activated(object sender, EventArgs args)
@@ -313,7 +296,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 
 		private void MenuScript_Aborted(object sender, EventArgs e)
 		{
-			if(repairBlip != null && repairBlip.Exists())
+			if (repairBlip?.Exists() == true)
 			{
 				repairBlip.Delete();
 			}
@@ -331,7 +314,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 
 			mainMenu = null;
 			buyMenu = null;
-
 		}
 
 		private void Common_Unload(object sender, EventArgs e)
@@ -388,23 +370,26 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 					break;
 				case Keys.E:
 					if (mainMenu.Visible) return;
+
 					if (buyMenu.Visible)
 					{
 						buyMenu.Visible = false;
 						return;
 					}
+
 					if (AmmuController.DistanceToAmmu() && !lemonPool.AreAnyVisible)
 					{
 						buyMenu.Visible = true;
 					}
+
 					if (HungryController.IsPlayerCloseReseller() && !lemonPool.AreAnyVisible)
 					{
 						foodMenu.Visible = true;
 					}
+
 					if (repair.DistanceTo(Game.Player.Character.Position) <= 10f && Game.Player.Character.IsInVehicle())
 					{
-		
-						if(Game.Player.Character.CurrentVehicle.IsDamaged == false)
+						if (!Game.Player.Character.CurrentVehicle.IsDamaged)
 						{
 							Screen.ShowSubtitle(Strings.RepairUndamaged);
 							return;
@@ -413,6 +398,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 						Game.Player.Character.CurrentVehicle.Repair();
 						Screen.ShowSubtitle(Strings.RepairSuccess);
 					}
+
 					break;
 			}
 		}

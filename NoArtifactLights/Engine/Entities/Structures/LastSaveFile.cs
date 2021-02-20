@@ -22,7 +22,7 @@ namespace NoArtifactLights.Engine.Entities.Structures
 		public int Cash { get; set; }
 		public int Bank { get; set; }
 		public string Model { get; set; }
-		public SaveWeapon[] Weapons { get; set; }
+		public SaveWeapon[] Weapons;
 		public int PlayerArmor { get; set; }
 		public int PlayerHealth { get; set; }
 		public float PlayerHungry { get; set; }

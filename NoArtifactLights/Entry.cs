@@ -55,7 +55,9 @@ namespace NoArtifactLights
 				this.Tick += Entry_Tick;
 				this.Aborted += Entry_Aborted;
 			}
+#pragma warning disable CA1031
 			catch (Exception ex)
+#pragma warning restore CA1031
 			{
 				Screen.FadeIn(500);
 				logger.Fatal(ex, "Excepting during initial load process");

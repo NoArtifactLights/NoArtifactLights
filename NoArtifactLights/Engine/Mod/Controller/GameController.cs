@@ -8,17 +8,13 @@ using NLog;
 using NoArtifactLights.Engine.Entities.Enums;
 using NoArtifactLights.Resources;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoArtifactLights.Engine.Mod.Controller
 {
 	public static class GameController
 	{
-		private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
+		private static readonly NLog.Logger logger = LogManager.GetCurrentClassLogger();
 
 		public static void CheckSnapshotInformation()
 		{
@@ -36,10 +32,11 @@ namespace NoArtifactLights.Engine.Mod.Controller
 		/// <param name="p"></param>
 		public static void AddWeaponedPed(Ped p)
 		{
-			if(p == null || !p.Exists())
+			if (p?.Exists() == false)
 			{
 				return;
-			}    
+			}
+
 			Entry.weaponedPeds.Add(p);
 		}
 
@@ -92,33 +89,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 					break;
 			}
 		}
-		internal static bool CreateDelivery(out Vehicle car, out Ped driver)
-		{
-			try
-			{
-				Vehicle deliveryCar = World.CreateVehicle("MULE", World.GetNextPositionOnStreet(Game.Player.Character.Position.Around(30f)));
-				Ped delivery = deliveryCar.CreateRandomPedOnSeat(VehicleSeat.Driver);
-				delivery.AddBlip();
-				delivery.AttachedBlip.Sprite = BlipSprite.PersonalVehicleCar;
-				delivery.AttachedBlip.IsFriendly = false;
-				delivery.AttachedBlip.IsFlashing = true;
-				delivery.AttachedBlip.Color = BlipColor.Red;
-				delivery.IsPersistent = true;
-				deliveryCar.IsPersistent = true;
-				delivery.AlwaysKeepTask = true;
-				delivery.BlockPermanentEvents = true;
-				car = deliveryCar;
-				driver = delivery;
-				return true;
-			}
-			catch(Exception ex)
-			{
-				logger.Error(ex);
-				car = null;
-				driver = null;
-				return false;
-			}
-		}
 
 		internal static void EquipWeapon(this Ped ped)
 		{
@@ -130,12 +100,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			}
 			switch (Common.difficulty)
 			{
-				default:
-				case Difficulty.Initial:
-					if (new Random().Next(200, 272) == 250) wp = WeaponHash.PumpShotgun;
-					else wp = WeaponHash.Pistol;
-					break;
-
 				case Difficulty.Easy:
 					wp = WeaponHash.PumpShotgun;
 					break;
@@ -150,6 +114,11 @@ namespace NoArtifactLights.Engine.Mod.Controller
 
 				case Difficulty.Nether:
 					wp = WeaponHash.RPG;
+					break;
+
+				default:
+					if (new Random().Next(200, 272) == 250) wp = WeaponHash.PumpShotgun;
+					else wp = WeaponHash.Pistol;
 					break;
 			}
 			ped.Weapons.Give(wp, 9999, true, true);

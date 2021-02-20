@@ -25,7 +25,7 @@ namespace NoArtifactLights
 
 		[Obsolete]
 		public static int Cash { get; set; } = 0;
-		
+
 		[Obsolete]
 		public static int Bank { get; set; } = 0;
 
@@ -33,7 +33,7 @@ namespace NoArtifactLights
 
 		internal static void OnLaunch(object you)
 		{
-			Start(you, new EventArgs());
+			Start(you, EventArgs.Empty);
 		}
 
 		internal static event EventHandler Start;
@@ -41,7 +41,7 @@ namespace NoArtifactLights
 		internal static void UnloadMod(object you)
 		{
 			Notification.Show(Strings.Unload);
-			Unload(you, new EventArgs());
+			Unload(you, EventArgs.Empty);
 		}
 
 		public static bool Cost(int amount)

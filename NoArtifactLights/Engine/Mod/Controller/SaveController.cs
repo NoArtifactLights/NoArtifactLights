@@ -23,7 +23,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 		private static readonly Logger logger = LogManager.GetLogger("SaveController");
 		private const string SaveFilePath = "NAL\\game.dat";
 		private const int SaveVersion = 7;
-		private const int LastSaveVersion = -1;
 
 		internal static void CheckAndFixDataFolder()
 		{
@@ -43,7 +42,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			sw.Start();
 			try
 			{
-				string tempPath = "NAL\\temp\\raw.dat";
+				const string tempPath = "NAL\\temp\\raw.dat";
 				var fs = File.Create(tempPath);
 
 				logger.Info("Stream opened");
@@ -139,7 +138,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 		{
 			CheckAndFixDataFolder();
 			SaveFile sf;
-			LastSaveFile lsf;
 
 			if (!File.Exists(SaveFilePath))
 			{
@@ -150,11 +148,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			sf = LoadGameFile(slot);
 			if (sf.Version != SaveVersion)
 			{
-				if (sf.Version == LastSaveVersion)
-				{
-					lsf = LoadOldSave();
-					sf = UpdateSaveFile(lsf);
-				}
 				Notification.Show(Strings.SaveVersion);
 				return;
 			}
@@ -173,45 +166,50 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			{
 				Game.Player.Character.Health = sf.PlayerHealth;
 			}
+
 			Game.Player.Character.Armor = sf.PlayerArmor;
 		}
 
 		internal static void Save(bool blackout, int slot)
 		{
 			CheckAndFixDataFolder();
-			SaveFile sf = new SaveFile();
-			sf.Version = SaveVersion;
-			sf.Status = new WorldStatus(World.Weather, World.CurrentTimeOfDay.Hours, World.CurrentTimeOfDay.Minutes);
-			sf.PlayerX = Game.Player.Character.Position.X;
-			sf.PlayerY = Game.Player.Character.Position.Y;
-			sf.PlayerZ = Game.Player.Character.Position.Z;
-			sf.Blackout = blackout;
-			sf.Kills = Common.counter;
-			sf.CurrentDifficulty = Common.difficulty;
-			sf.PlayerHealth = Game.Player.Character.Health;
-			sf.PlayerArmor = Game.Player.Character.Armor;
-			sf.PlayerHungry = HungryController.Hungry;
-			sf.PlayerHydration = HungryController.Water;
+			SaveFile sf = new SaveFile
+			{
+				Version = SaveVersion,
+				Status = new WorldStatus(World.Weather, World.CurrentTimeOfDay.Hours, World.CurrentTimeOfDay.Minutes),
+				PlayerX = Game.Player.Character.Position.X,
+				PlayerY = Game.Player.Character.Position.Y,
+				PlayerZ = Game.Player.Character.Position.Z,
+				Blackout = blackout,
+				Kills = Common.counter,
+				CurrentDifficulty = Common.difficulty,
+				PlayerHealth = Game.Player.Character.Health,
+				PlayerArmor = Game.Player.Character.Armor,
+				PlayerHungry = HungryController.Hungry,
+				PlayerHydration = HungryController.Water
+			};
 
 			SaveGameFile(sf, slot);
 		}
 
 		internal static SaveFile UpdateSaveFile(LastSaveFile lsf)
 		{
-			SaveFile result = new SaveFile();
-			result.Blackout = lsf.Blackout;
-			result.CurrentDifficulty = lsf.CurrentDifficulty;
-			result.Kills = lsf.Kills;
-			result.Model = lsf.Model;
-			result.PlayerArmor = lsf.PlayerArmor;
-			result.PlayerHealth = lsf.PlayerHealth;
-			result.PlayerHungry = 10.0f;
-			result.PlayerHydration = 10.0f;
-			result.PlayerX = lsf.PlayerX;
-			result.PlayerY = lsf.PlayerY;
-			result.PlayerZ = lsf.PlayerZ;
-			result.Status = lsf.Status;
-			result.Version = SaveVersion;
+			SaveFile result = new SaveFile
+			{
+				Blackout = lsf.Blackout,
+				CurrentDifficulty = lsf.CurrentDifficulty,
+				Kills = lsf.Kills,
+				Model = lsf.Model,
+				PlayerArmor = lsf.PlayerArmor,
+				PlayerHealth = lsf.PlayerHealth,
+				PlayerHungry = 10.0f,
+				PlayerHydration = 10.0f,
+				PlayerX = lsf.PlayerX,
+				PlayerY = lsf.PlayerY,
+				PlayerZ = lsf.PlayerZ,
+				Status = lsf.Status,
+				Version = SaveVersion
+			};
 			return result;
 		}
 	}

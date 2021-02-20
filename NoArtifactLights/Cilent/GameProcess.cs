@@ -23,7 +23,7 @@ namespace NoArtifactLights.Cilent
 		internal static HandleableList weaponedPeds = new HandleableList();
 
 		public Version Version { get; }
-		private Logger logger = LogManager.GetLogger("Client");
+		private static readonly Logger logger = LogManager.GetLogger("Client");
 
 		internal void SetForceStart()
 		{
@@ -72,16 +72,19 @@ namespace NoArtifactLights.Cilent
 						{
 							Common.Earn(new Random().Next(4, 16));
 						}
+
 						Common.counter++;
 						if (weaponedPeds.IsDuplicate(ped))
 						{
 							Common.Earn(50);
 							GameUI.DisplayHelp(Strings.ArmedBonus);
-							if (ped.AttachedBlip != null && ped.AttachedBlip.Exists())
+
+							if (ped.AttachedBlip?.Exists() == true)
 							{
-								ped.AttachedBlip.Delete();
+								ped.AttachedBlip?.Delete();
 							}
 						}
+
 						switch (Common.counter)
 						{
 							case 1:

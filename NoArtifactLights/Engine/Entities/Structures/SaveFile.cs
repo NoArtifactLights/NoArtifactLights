@@ -7,7 +7,9 @@ using NoArtifactLights.Engine.Entities.Enums;
 namespace NoArtifactLights.Engine.Entities.Structures
 {
 	[Serializable]
+#pragma warning disable CA1815 // Override equals and operator equals on value types
 	public struct SaveFile
+#pragma warning restore CA1815 // Override equals and operator equals on value types
 	{
 		public int Version { get; set; }
 		public float PlayerX { get; set; }
