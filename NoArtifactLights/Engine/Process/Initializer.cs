@@ -48,7 +48,7 @@ namespace NoArtifactLights.Engine.Process
 			Game.Player.IgnoredByPolice = true;
 			Game.Player.ChangeModel("a_m_m_bevhills_02");
 
-			Companion.Colors.Current = Color.FromArgb(255, 0, 114, 188);
+			Notification.Show("~y~~h~HINT~w~You can now set the color of the a_m_m_bevhills_02 to 0, 114, 118.");
 
 			Screen.FadeIn(1000);
 			EventController.RegisterEvent(typeof(ArmedPed));
