@@ -34,11 +34,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		private NativeItem itemKills;
 		private NativeCheckboxItem itemCheatEnabled;
 		private NativeItem itemCommand;
-		private NativeItem itemDeposit;
-		private NativeItem itemWithdraw;
 		private NativeCheckboxItem itemLights;
-		private NativeItem itemCash;
-		private NativeItem itemBank;
 
 		private NativeMenu modelMenu;
 		private NativeItem itemDefaultModel;
@@ -113,10 +109,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				itemKills = new NativeItem(Strings.ItemKills, Strings.ItemKillsSubtitle);
 				itemCheatEnabled = new NativeCheckboxItem(Strings.ItemCheat, Strings.ItemCheatDescription);
 				itemCommand = new NativeItem(Strings.ItemCommand, Strings.ItemCommandDescription);
-				itemDeposit = new NativeItem(Strings.ItemDepositTitle, Strings.ItemDepositSubtitle);
-				itemWithdraw = new NativeItem(Strings.ItemWithdrawTitle, Strings.ItemWithdrawSubtitle);
-				itemCash = new NativeItem(Strings.ItemCashTitle, Strings.ItemCashSubtitle);
-				itemBank = new NativeItem(Strings.ItemBankTitle, Strings.ItemBankSubtitle);
 				itemModels = new NativeItem(Strings.ItemModels, Strings.ItemModelsDescription);
 
 				modelMenu = new NativeMenu("Models", Strings.MenuModel);
@@ -209,10 +201,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 
 				mainMenu.Add(itemDifficulty);
 				mainMenu.Add(itemKills);
-				mainMenu.Add(itemDeposit);
-				mainMenu.Add(itemWithdraw);
-				mainMenu.Add(itemCash);
-				mainMenu.Add(itemBank);
+
 				lemonPool.Add(mainMenu);
 				lemonPool.Add(modelMenu);
 				lemonPool.Add(foodMenu);
@@ -223,8 +212,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				itemCallCops.Activated += ItemCallCops_Activated;
 				itemCommand.Activated += ItemCommand_Activated;
 				itemCheatEnabled.Activated += ItemCheatEnabled_Activated;
-				itemDeposit.Activated += ItemDeposit_Activated;
-				itemWithdraw.Activated += ItemWithdraw_Activated;
 
 				timerBars.Add(hungryBar);
 				timerBars.Add(waterBar);
@@ -240,7 +227,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				itemBodyArmor = new NativeItem(Strings.WeaponBodyArmor, Strings.WeaponBodyArmorDescription);
 				itemBodyArmor.AltTitle = "$380";
 				logger.Trace("Instances created");
-				buyMenu.Add(itemCash);
 				buyMenu.Add(itemPistol);
 				buyMenu.Add(itemPumpShotgun);
 				buyMenu.Add(itemBodyArmor);
@@ -325,52 +311,11 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 			AmmuController.SellWeapon(350, 50, WeaponHash.CarbineRifle);
 		}
 
-		private void ItemWithdraw_Activated(object sender, EventArgs args)
-		{
-			mainMenu.Visible = false;
-			string cash = Game.GetUserInput(WindowTitle.EnterMessage20, "", 20);
-			int result;
-			bool success = int.TryParse(cash, out result);
-			if (!success)
-			{
-				Screen.ShowSubtitle(Strings.InputNotNumber);
-				return;
-			}
-			if(Common.Bank < result)
-			{
-				Screen.ShowSubtitle(Strings.WithdrawNoCurrency);
-				return;
-			}
-			Common.Bank -= result;
-			Common.Cash += result;
-			GameUI.DisplayHelp(Strings.TransactionSuccess);
-		}
-
-		private void ItemDeposit_Activated(object sender, EventArgs args)
-		{
-			mainMenu.Visible = false;
-			string cash = Game.GetUserInput(WindowTitle.EnterMessage20, "", 20);
-			int result;
-			bool success = int.TryParse(cash, out result);
-			if (!success)
-			{
-				Screen.ShowSubtitle(Strings.InputNotNumber);
-				return;
-			}
-			if (!Common.Cost(result))
-			{
-				return;
-			}
-			Common.Bank += result;
-			GameUI.DisplayHelp(Strings.TransactionSuccess);
-		}
-
 		private void MenuScript_Aborted(object sender, EventArgs e)
 		{
 			if(repairBlip != null && repairBlip.Exists())
 			{
 				repairBlip.Delete();
-				
 			}
 
 			if (buyMenu != null) buyMenu.Visible = false;
@@ -380,7 +325,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				itemLights.CheckboxChanged -= ItemLights_CheckboxEvent;
 				itemCallCops.Activated -= ItemCallCops_Activated;
 			}
-			
+
 			Tick -= MenuScript_Tick;
 			KeyDown -= MenuScript_KeyDown;
 
@@ -405,19 +350,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		{
 			Function.Call(Hash.CREATE_INCIDENT, 7, Game.Player.Character.Position.X, Game.Player.Character.Position.Y, Game.Player.Character.Position.Z, 2, 3.0f, new OutputArgument());
 		}
-
-		//private void ItemLoad_Activated(object sender, EventArgs arguments)
-		//{
-		//	SaveController.Load();
-		//	itemLights.Checked = Common.blackout;
-		//	itemDifficulty.AltTitle = Strings.ResourceManager.GetString("Difficulty" + Common.difficulty.ToString());
-		//	itemKills.AltTitle = Common.counter.ToString();
-		//	itemCash.AltTitle = "$" + Common.Cash.ToString();
-		//	itemSave.Enabled = true;
-		//	Notification.Show(Strings.GameLoaded);
-		//}
-
-		/*private void ItemSave_Activated(object sender, EventArgs arguments) => SaveController.Save(itemLights.Checked);*/
 
 		private void ItemLights_CheckboxEvent(object sender, EventArgs args)
 		{
@@ -453,8 +385,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 					mainMenu.Visible = !mainMenu.Visible;
 					itemDifficulty.AltTitle = Strings.ResourceManager.GetString("Difficulty" + Common.difficulty.ToString());
 					itemKills.AltTitle = Common.counter.ToString();
-					itemCash.AltTitle = "$" + Common.Cash.ToString();
-					itemBank.AltTitle = "$" + Common.Bank.ToString();
 					break;
 				case Keys.E:
 					if (mainMenu.Visible) return;

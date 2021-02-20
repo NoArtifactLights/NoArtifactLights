@@ -38,21 +38,21 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			if(!fitRespawn && !proceeding && IsPlayerJustFitRespawn())
 			{
 				fitRespawn = true;
-				logger.Info("Player is respawning");
+				logger.Info("Player is re-spawning");
 			}
 			if(fitRespawn && !proceeding)
 			{
-				logger.Info("Respawn fit, marking respawn!");
+				logger.Info("Re-spawn fit, marking re-spawn!");
 				ResetCallMarker();
 				proceeding = true;
 			}
 			if(proceeding)
 			{
 				if (GetMsPassed() <= 16000) return;
-				logger.Info("Proceeding to respawn!");
+				logger.Info("Proceeding to re-spawn!");
 				if (Screen.IsFadedOut) Screen.FadeIn(500);
 				HungryController.ResetHungry();
-				Common.Cash = 0;
+
 				proceeding = false;
 				fitRespawn = false;
 			}

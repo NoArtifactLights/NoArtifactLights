@@ -68,6 +68,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 					SetRelationshipBetGroupsUInt(Relationship.Hate, 0xA49E591C, 0x02B8FA80);
 					SetRelationshipBetGroupsUInt(Relationship.Hate, 0x02B8FA80, 0xA49E591C);
 					break;
+
 				case Difficulty.Normal:
 					SetRelationshipBetGroupsUInt(Relationship.Hate, 0xA49E591C, 0x02B8FA80);
 					SetRelationshipBetGroupsUInt(Relationship.Hate, 0x02B8FA80, 0xA49E591C);
@@ -76,6 +77,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 					SetRelationshipBetGroupsUInt(Relationship.Hate, 0x45897C40, 0xC26D562A);
 					SetRelationshipBetGroupsUInt(Relationship.Hate, 0xC26D562A, 0x45897C40);
 					break;
+
 				case Difficulty.Nether:
 				case Difficulty.Hard:
 					SetRelationshipBetGroupsUInt(Relationship.Hate, 0xA49E591C, 0x02B8FA80);

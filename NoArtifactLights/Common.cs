@@ -25,7 +25,8 @@ namespace NoArtifactLights
 
 		[Obsolete]
 		public static int Cash { get; set; } = 0;
-
+		
+		[Obsolete]
 		public static int Bank { get; set; } = 0;
 
 		public static bool IsCheatEnabled { get; internal set; }

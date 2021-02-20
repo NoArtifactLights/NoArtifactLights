@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// NoArtifactLights
+// (C) RelaperCrystal and contributors. Licensed under GPLv3 or later.
+
+using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GTA;
 using GTA.Native;
 using LemonUI.Scaleform;
@@ -23,14 +22,12 @@ namespace NoArtifactLights.Cilent
 		internal static HandleableList killedPeds = new HandleableList();
 		internal static HandleableList weaponedPeds = new HandleableList();
 
-		internal static Ped current;
 		public Version Version { get; }
 		private Logger logger = LogManager.GetLogger("Client");
-		private bool forcestart;
 
 		internal void SetForceStart()
 		{
-			forcestart = true;
+			// TODO
 		}
 
 		public GameProcess(Version version)

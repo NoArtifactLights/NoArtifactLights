@@ -70,7 +70,6 @@
   <ItemGroup>
     <Compile Include="Cilent\GameProcess.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="Engine\Data\DataHelper.cs" />
     <Compile Include="Engine\Entities\Enums\Difficulty.cs" />
     <Compile Include="Engine\Entities\Enums\Permission.cs" />
     <Compile Include="Engine\Entities\RelationshipGroupList.cs" />

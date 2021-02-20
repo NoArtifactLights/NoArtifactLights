@@ -10,13 +10,9 @@ using NoArtifactLights.Engine.Mod.Controller;
 using NoArtifactLights.Resources;
 using System;
 using System.IO;
-using System.Timers;
 using Logger = NLog.Logger;
-using NoArtifactLights.Engine.Process;
 using NoArtifactLights.Engine.Entities;
-using NoArtifactLights.Engine.Entities.Enums;
 using System.Collections.Generic;
-using LemonUI.Scaleform;
 using System.Threading;
 using NoArtifactLights.Cilent;
 using System.Reflection;
@@ -26,16 +22,13 @@ namespace NoArtifactLights
 	[ScriptAttributes(Author = "RelaperCrystal")]
 	public class Entry : Script
 	{
-		private Pickup weapon;
-		private Blip weaponBlip;
 		internal static HandleableList peds1 = new HandleableList();
 		internal static HandleableList killedPeds = new HandleableList();
 		internal static HandleableList weaponedPeds = new HandleableList();
-		private int eplased = 0;
 
 		internal static List<Blip> blips = new List<Blip>();
 
-		private Logger logger = LogManager.GetLogger("Entry");
+		private static readonly Logger logger = LogManager.GetLogger("Entry");
 		internal static bool forcestart;
 
 		public static GameProcess Process { get; private set; }

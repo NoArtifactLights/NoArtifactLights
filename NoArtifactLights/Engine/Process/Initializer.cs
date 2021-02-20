@@ -10,10 +10,6 @@ using NLog;
 using NoArtifactLights.Engine.Mod.Controller;
 using NoArtifactLights.Engine.Mod.API.Events;
 using NoArtifactLights.Engine.Entities.Enums;
-using System.IO;
-using NoArtifactLights.Resources;
-using PlayerCompanion;
-using System.Drawing;
 
 namespace NoArtifactLights.Engine.Process
 {
