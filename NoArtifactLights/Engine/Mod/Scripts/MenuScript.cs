@@ -44,6 +44,16 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		private NativeItem itemDefaultModel;
 		private NativeItem itemCopModel;
 
+		private NativeMenu saveMenu;
+		private NativeItem itemSaveSlot1;
+		private NativeItem itemSaveSlot2;
+		private NativeItem itemSaveSlot3;
+
+		private NativeMenu loadMenu;
+		private NativeItem itemLoadSlot1;
+		private NativeItem itemLoadSlot2;
+		private NativeItem itemLoadSlot3;
+
 		private NativeMenu buyMenu;
 		private NativeItem itemPistol;
 		private NativeItem itemPumpShotgun;
@@ -96,8 +106,8 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				mainMenu = new NativeMenu("NAL", Strings.MenuMainTitle);
 #endif
 				itemLights = new NativeCheckboxItem(Strings.ItemLightsTitle, Strings.ItemLightsSubtitle, true);
-				itemSave = new NativeItem(Strings.ItemSaveTitle, Strings.ItemSaveSubtitle);
-				itemLoad = new NativeItem(Strings.ItemLoadTitle, Strings.ItemLoadSubtitle);
+				//itemSave = new NativeItem(Strings.ItemSaveTitle, Strings.ItemSaveSubtitle);
+				//itemLoad = new NativeItem(Strings.ItemLoadTitle, Strings.ItemLoadSubtitle);
 				itemCallCops = new NativeItem(Strings.ItemCopsTitle, Strings.ItemCopsSubtitle);
 				itemDifficulty = new NativeItem(Strings.ItemDifficulty, Strings.ItemDIfficultySubtitle);
 				itemKills = new NativeItem(Strings.ItemKills, Strings.ItemKillsSubtitle);
@@ -117,6 +127,65 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				modelMenu.Add(itemCopModel);
 				itemDefaultModel.Activated += ItemDefaultModel_Activated;
 				itemCopModel.Activated += ItemCopModel_Activated;
+				#region Items - Load & Save
+				saveMenu = new NativeMenu(Strings.MenuSaveHeader, "SAVE");
+				itemSaveSlot1 = new NativeItem(string.Format(Strings.MenuSaveItem, 1), Strings.MenuSaveItemSubtitle);
+				itemSaveSlot2 = new NativeItem(string.Format(Strings.MenuSaveItem, 2), Strings.MenuSaveItemSubtitle);
+				itemSaveSlot3 = new NativeItem(string.Format(Strings.MenuSaveItem, 3), Strings.MenuSaveItemSubtitle);
+
+				itemSaveSlot1.Activated += (menu, i) =>
+				{
+					SaveController.Save(Common.blackout, 1);
+				};
+
+				itemSaveSlot2.Activated += (menu, i) =>
+				{
+					SaveController.Save(Common.blackout, 2);
+				};
+
+				itemSaveSlot3.Activated += (menu, i) =>
+				{
+					SaveController.Save(Common.blackout, 3);
+				};
+
+				saveMenu.Add(itemSaveSlot1);
+				saveMenu.Add(itemSaveSlot2);
+				saveMenu.Add(itemSaveSlot3);
+				lemonPool.Add(saveMenu);
+
+				loadMenu = new NativeMenu(Strings.MenuLoadHeader, Strings.MenuLoadSubtitle);
+				itemLoadSlot1 = new NativeItem(string.Format(Strings.MenuSaveItem, 1), Strings.MenuLoadItemSubtitle);
+				itemLoadSlot2 = new NativeItem(string.Format(Strings.MenuSaveItem, 2), Strings.MenuLoadItemSubtitle);
+				itemLoadSlot3 = new NativeItem(string.Format(Strings.MenuSaveItem, 3), Strings.MenuLoadItemSubtitle);
+
+				itemLoadSlot1.Activated += (menu, i) =>
+				{
+					SaveController.Load(1);
+				};
+
+				itemLoadSlot2.Activated += (menu, i) =>
+				{
+					SaveController.Load(2);
+				};
+
+				itemLoadSlot3.Activated += (menu, i) =>
+				{
+					SaveController.Load(3);
+				};
+
+				loadMenu.Add(itemLoadSlot1);
+				loadMenu.Add(itemLoadSlot2);
+				loadMenu.Add(itemLoadSlot3);
+				lemonPool.Add(loadMenu);
+
+				itemSave = mainMenu.AddSubMenu(saveMenu);
+				itemSave.Title = Strings.ItemSaveTitle;
+				itemSave.Description = Strings.ItemSaveSubtitle;
+
+				itemLoad = mainMenu.AddSubMenu(loadMenu);
+				itemLoad.Title = Strings.ItemLoadTitle;
+				itemLoad.Description = Strings.ItemLoadSubtitle;
+				#endregion
 
 				foodMenu = new NativeMenu("Food", Strings.MenuFoodShopSubtitle);
 
@@ -151,8 +220,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				Tick += MenuScript_Tick;
 				KeyDown += MenuScript_KeyDown;
 				itemLights.CheckboxChanged += ItemLights_CheckboxEvent;
-				itemSave.Activated += ItemSave_Activated;
-				itemLoad.Activated += ItemLoad_Activated;
 				itemCallCops.Activated += ItemCallCops_Activated;
 				itemCommand.Activated += ItemCommand_Activated;
 				itemCheatEnabled.Activated += ItemCheatEnabled_Activated;
@@ -311,8 +378,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 			{
 				mainMenu.Visible = false;
 				itemLights.CheckboxChanged -= ItemLights_CheckboxEvent;
-				itemSave.Activated -= ItemSave_Activated;
-				itemLoad.Activated -= ItemLoad_Activated;
 				itemCallCops.Activated -= ItemCallCops_Activated;
 			}
 			
@@ -341,18 +406,18 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 			Function.Call(Hash.CREATE_INCIDENT, 7, Game.Player.Character.Position.X, Game.Player.Character.Position.Y, Game.Player.Character.Position.Z, 2, 3.0f, new OutputArgument());
 		}
 
-		private void ItemLoad_Activated(object sender, EventArgs args)
-		{
-			SaveController.Load();
-			itemLights.Checked = Common.blackout;
-			itemDifficulty.AltTitle = Strings.ResourceManager.GetString("Difficulty" + Common.difficulty.ToString());
-			itemKills.AltTitle = Common.counter.ToString();
-			itemCash.AltTitle = "$" + Common.Cash.ToString();
-			itemSave.Enabled = true;
-			Notification.Show(Strings.GameLoaded);
-		}
+		//private void ItemLoad_Activated(object sender, EventArgs arguments)
+		//{
+		//	SaveController.Load();
+		//	itemLights.Checked = Common.blackout;
+		//	itemDifficulty.AltTitle = Strings.ResourceManager.GetString("Difficulty" + Common.difficulty.ToString());
+		//	itemKills.AltTitle = Common.counter.ToString();
+		//	itemCash.AltTitle = "$" + Common.Cash.ToString();
+		//	itemSave.Enabled = true;
+		//	Notification.Show(Strings.GameLoaded);
+		//}
 
-		private void ItemSave_Activated(object sender, EventArgs args) => SaveController.Save(itemLights.Checked);
+		/*private void ItemSave_Activated(object sender, EventArgs arguments) => SaveController.Save(itemLights.Checked);*/
 
 		private void ItemLights_CheckboxEvent(object sender, EventArgs args)
 		{

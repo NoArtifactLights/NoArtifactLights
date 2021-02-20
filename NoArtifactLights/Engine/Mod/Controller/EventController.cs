@@ -6,7 +6,6 @@ using NLog;
 using NoArtifactLights.Engine.Mod.API;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NoArtifactLights.Engine.Mod.Controller
 {
@@ -14,9 +13,30 @@ namespace NoArtifactLights.Engine.Mod.Controller
 	{
 		public static List<Type> registeredEvents = new List<Type>();
 		public static bool disable = false;
+		internal static bool forceEvent = false;
 		private static NLog.Logger logger = LogManager.GetCurrentClassLogger();
 		private static List<Event> processingEvents = new List<Event>();
 		
+		internal static void Initialize()
+		{
+			Functions.OnTick += Functions_OnTick;
+			Functions.SelectPed += Functions_SelectPed;
+		}
+
+		private static void Functions_SelectPed(Cilent.GameProcess sender, Ped ped)
+		{
+			if (new Random().Next(9, 89) == 10 || forceEvent)
+			{
+				forceEvent = false;
+				EventController.StartRandomEvent(ped);
+			}
+		}
+
+		private static void Functions_OnTick(Cilent.GameProcess sender)
+		{
+			Process();
+		}
+
 		public static void RegisterEvent(Type t)
 		{
 			if (t == null) return;

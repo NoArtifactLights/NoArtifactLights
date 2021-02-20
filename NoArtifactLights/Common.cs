@@ -6,6 +6,7 @@ using NLog;
 using NoArtifactLights.Engine.Entities.Enums;
 using NoArtifactLights.Engine.Mod.Controller;
 using NoArtifactLights.Resources;
+using PlayerCompanion;
 using System;
 
 namespace NoArtifactLights
@@ -16,51 +17,56 @@ namespace NoArtifactLights
 		internal static Difficulty difficulty = Difficulty.Initial;
 		internal static bool blackout;
 		internal static NLog.Logger logger = LogManager.GetLogger("Common");
-		internal static readonly WeaponSavingController weaponSaving = new WeaponSavingController();
 		internal static event EventHandler Unload;
 
 		//internal static int intervalToRespawn;
 
 		// internal static event EventHandler CashChanged;
 
+		[Obsolete]
 		public static int Cash { get; set; } = 0;
 
 		public static int Bank { get; set; } = 0;
 
 		public static bool IsCheatEnabled { get; internal set; }
+
 		internal static void OnLaunch(object you)
 		{
 			Start(you, new EventArgs());
 		}
+
 		internal static event EventHandler Start;
 
 		internal static void UnloadMod(object you)
 		{
 			Notification.Show(Strings.Unload);
-			
 			Unload(you, new EventArgs());
 		}
 
 		public static bool Cost(int amount)
 		{
-			if(Cash < amount)
+			var wallet = Companion.Wallet;
+
+			if (wallet.Money < amount)
 			{
 				Screen.ShowSubtitle(Strings.BuyNoMoney);
 				return false;
 			}
-			Cash -= amount;
+
+			wallet.Money -= amount;
+
 			return true;
 		}
 
 		public static bool Earn(int amount)
 		{
-			if(Cash == int.MaxValue)
+			if (Companion.Wallet.Money == int.MaxValue)
 			{
 				logger.Info("Player's cash has reached int limit");
 				Notification.Show(NotificationIcon.Blocked, "", "", Strings.CashMaximum);
 				return false;
 			}
-			Cash += amount;
+			Companion.Wallet.Money += amount;
 			return true;
 		}
 	}

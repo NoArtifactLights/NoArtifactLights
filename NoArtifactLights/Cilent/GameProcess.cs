@@ -14,16 +14,16 @@ using NoArtifactLights.Engine.Mod.API;
 using NoArtifactLights.Engine.Mod.Controller;
 using NoArtifactLights.Engine.Process;
 using NoArtifactLights.Resources;
-using NoArtifactLights.Server;
 
 namespace NoArtifactLights.Cilent
 {
-	public class NALClient : NetworkClient
+	public class GameProcess
 	{
 		internal static HandleableList peds1 = new HandleableList();
 		internal static HandleableList killedPeds = new HandleableList();
 		internal static HandleableList weaponedPeds = new HandleableList();
 
+		internal static Ped current;
 		public Version Version { get; }
 		private Logger logger = LogManager.GetLogger("Client");
 		private bool forcestart;
@@ -33,24 +33,25 @@ namespace NoArtifactLights.Cilent
 			forcestart = true;
 		}
 
-		public NALClient(Version version)
+		public GameProcess(Version version)
 		{
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
 			Version = version;
-			logger.Info("Constructing NAL Client version " + version.ToString());
+			logger.Info("Constructing NAL version " + version.ToString());
 			Function.Call(Hash.SET_ARTIFICIAL_LIGHTS_STATE, true);
 
 			logger.Info("Initializing NAL Program...");
 			Initializer.LoadProgram();
 
 			logger.Info("Starting Command Client...");
-			NAL.Cmds.client = this;
 			sw.Stop();
 
+			Functions.TriggerInitialize(this);
+
 			Common.OnLaunch(this);
-			logger.Info("DONE! Client construction took " + sw.ElapsedMilliseconds);
+			logger.Info("DONE! Client construction took " + sw.ElapsedMilliseconds + " ms");
 		}
 
 		internal void Tick()
@@ -124,12 +125,7 @@ namespace NoArtifactLights.Cilent
 						continue;
 					}
 					peds1.Add(ped);
-					EventController.Process();
-					if (new Random().Next(9, 89) == 10 || forcestart == true)
-					{
-						forcestart = false;
-						EventController.StartRandomEvent(ped);
-					}
+					Functions.TriggerPed(this, ped);
 				}
 
 				if (killedPeds.Count >= 6000)
@@ -144,6 +140,7 @@ namespace NoArtifactLights.Cilent
 				{
 					peds1.Clear();
 				}
+				Functions.TriggerTick(this);
 			}
 			catch (Exception ex)
 			{
@@ -151,21 +148,6 @@ namespace NoArtifactLights.Cilent
 				logger.Fatal(ex);
 				throw;
 			}
-		}
-		public override void ConnectTo(IServer server)
-		{
-			logger.Info("Connecting to a server object");
-			base.ConnectTo(server);
-		}
-
-		public override void LeaveForcefully()
-		{
-			throw new NotImplementedException();
-		}
-
-		public override void Leave()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

@@ -5,6 +5,7 @@ using GTA;
 using GTA.Native;
 using GTA.UI;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 using Newtonsoft.Json.Serialization;
 using NLog;
 using NoArtifactLights.Engine.Entities.Structures;
@@ -21,57 +22,49 @@ namespace NoArtifactLights.Engine.Mod.Controller
 	{
 		private static Logger logger = LogManager.GetLogger("SaveController");
 		private const string savePath = "NAL\\game.dat";
-		private const int saveVersion = 5;
-		private const int saveLastVersion = 4;
+		private const int saveVersion = 6;
+		private const int saveLastVersion = 5;
 
 		internal static void CheckAndFixDataFolder()
 		{
-			if (!Directory.Exists("NAL")) Directory.CreateDirectory("NAL");
+			Directory.CreateDirectory("NAL");
+			Directory.CreateDirectory("NAL\\saves");
 			if (File.Exists("NALSave.xml")) File.Move("NALSave.xml", "NAL\\Save.xml");
-			if (File.Exists("NAL\\Save.xml"))
+			if (File.Exists("NAL\\Save.xml") || File.Exists("NAL\\game.dat"))
 			{
 				logger.Warn("Deprecated save found - will not load it!");
 				Notification.Show(Strings.DeprecatedXMLSave);
 			}
 		}
 
-		internal static void SaveGameFile(SaveFile sf)
+		internal static void SaveGameFile(SaveFile sf, int slot)
 		{
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 			try
 			{
-				DefaultContractResolver contractResolver = new DefaultContractResolver
-				{
-					NamingStrategy = new SnakeCaseNamingStrategy()
-				};
+				
+				string tempPath = "NAL\\temp\\raw.dat";
+				FileStream fs = File.Create(tempPath);
 
-				string json = JsonConvert.SerializeObject(sf, new JsonSerializerSettings
-				{
-					ContractResolver = contractResolver,
-					Formatting = Formatting.None
-				});
+				logger.Info("Stream opened");
 
-				byte[] data = Encoding.UTF8.GetBytes(json);
-				string dat = Convert.ToBase64String(data);
-
-				if(Directory.Exists("NAL\\temp"))
+				using (BsonWriter writer = new BsonWriter(fs))
 				{
-					logger.Info("Cleaning up uncleaned temporary files");
-					Directory.Delete("NAL\\temp", true);
+					logger.Info("Writing to BSON");
+					JsonSerializer serializer = new JsonSerializer();
+					serializer.Serialize(writer, sf);
 				}
 
-				Directory.CreateDirectory("NAL\\temp");
-				string tempPath = "NAL\\temp\\raw.dat";
-				File.WriteAllText(tempPath, dat);
+				string savePath = $"NAL\\saves\\{slot}.dat";
 
-				if(File.Exists("NAL\\game.dat"))
+				if (File.Exists(savePath))
 				{
 					logger.Info("Overwritten save file");
-					File.Delete("NAL\\game.dat");
+					File.Delete(savePath);
 				}
 
-				ZipFile.CreateFromDirectory("NAL\\temp", "NAL\\game.dat");
+				ZipFile.CreateFromDirectory("NAL\\temp", savePath);
 				Directory.Delete("NAL\\temp", true);
 			}
 			catch (IOException ioex)
@@ -84,30 +77,27 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			logger.Trace("File save cost " + sw.ElapsedMilliseconds + "ms.");
 		}
 
-		internal static SaveFile LoadGameFile()
+		internal static SaveFile LoadGameFile(int slot)
 		{
-			if(Directory.Exists("NAL\\temp"))
+			string savePath = $"NAL\\saves\\{slot}.dat";
+
+			if (Directory.Exists("NAL\\temp"))
 			{
-				logger.Info("Overwritten temponary files");
+				logger.Info("Overwritten temporary files");
 				Directory.Delete("NAL\\temp", true);
 			}
 
 			Directory.CreateDirectory("NAL\\temp");
-			ZipFile.ExtractToDirectory("NAL\\game.dat", "NAL\\temp");
-			string datBase64 = File.ReadAllText("NAL\\temp\\raw.dat");
-			byte[] jsonBytes = Convert.FromBase64String(datBase64);
-			string json = Encoding.UTF8.GetString(jsonBytes);
+			ZipFile.ExtractToDirectory(savePath, "NAL\\temp");
 
-			DefaultContractResolver contractResolver = new DefaultContractResolver
-			{
-				NamingStrategy = new SnakeCaseNamingStrategy()
-			};
+			SaveFile result;
 
-			SaveFile result = JsonConvert.DeserializeObject<SaveFile>(json, new JsonSerializerSettings
+			FileStream fs = File.OpenRead("NAL\\temp\\raw.dat");
+			using (BsonReader br = new BsonReader(fs))
 			{
-				ContractResolver = contractResolver,
-				Formatting = Formatting.None
-			});
+				JsonSerializer serializer = new JsonSerializer();
+				result = serializer.Deserialize<SaveFile>(br);
+			}
 
 			Directory.Delete("NAL\\temp", true);
 			return result;
@@ -142,7 +132,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			return result;
 		}
 
-		internal static void Load()
+		internal static void Load(int slot)
 		{
 			CheckAndFixDataFolder();
 			SaveFile sf;
@@ -152,7 +142,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 				Notification.Show(Strings.NoSave);
 				return;
 			}
-			sf = LoadGameFile();
+			sf = LoadGameFile(slot);
 			if (sf.Version != saveVersion)
 			{
 				if(sf.Version == saveLastVersion)
@@ -169,8 +159,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			Common.blackout = sf.Blackout;
 			Game.Player.Character.Position = new GTA.Math.Vector3(sf.PlayerX, sf.PlayerY, sf.PlayerZ);
 			Common.counter = sf.Kills;
-			Common.Cash = sf.Cash;
-			Common.Bank = sf.Bank;
 			Common.difficulty = sf.CurrentDifficulty;
 			GameController.SetRelationship(sf.CurrentDifficulty);
 			Game.Player.Character.Weapons.RemoveAll();
@@ -180,10 +168,9 @@ namespace NoArtifactLights.Engine.Mod.Controller
 				Game.Player.Character.Health = sf.PlayerHealth;
 			}
 			Game.Player.Character.Armor = sf.PlayerArmor;
-			Common.weaponSaving.FromSerializationWeapons(sf.Weapons);
 		}
 
-		internal static void Save(bool blackout)
+		internal static void Save(bool blackout, int slot)
 		{
 			CheckAndFixDataFolder();
 			SaveFile sf = new SaveFile();
@@ -195,23 +182,17 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			sf.Blackout = blackout;
 			sf.Kills = Common.counter;
 			sf.CurrentDifficulty = Common.difficulty;
-			sf.Cash = Common.Cash;
-			sf.Bank = Common.Bank;
 			sf.PlayerHealth = Game.Player.Character.Health;
 			sf.PlayerArmor = Game.Player.Character.Armor;
 			sf.PlayerHungry = HungryController.Hungry;
 			sf.PlayerHydration = HungryController.Water;
 
-			sf.Weapons = Common.weaponSaving.GetSerializationWeapons();
-
-			SaveGameFile(sf);
+			SaveGameFile(sf, slot);
 		}
 
 		internal static SaveFile UpdateSaveFile(LastSaveFile lsf)
 		{
 			SaveFile result = new SaveFile();
-			result.Bank = lsf.Bank;
-			result.Cash = lsf.Cash;
 			result.Blackout = lsf.Blackout;
 			result.CurrentDifficulty = lsf.CurrentDifficulty;
 			result.Kills = lsf.Kills;
@@ -225,7 +206,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			result.PlayerZ = lsf.PlayerZ;
 			result.Status = lsf.Status;
 			result.Version = saveVersion;
-			result.Weapons = lsf.Weapons;
 			return result;
 		}
 	}

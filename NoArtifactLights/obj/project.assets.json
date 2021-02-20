@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.8": {
-      "LemonUI.SHVDN3/1.0.0": {
+      "LemonUI.SHVDN3/1.2.0": {
         "type": "package",
         "dependencies": {
           "ScriptHookVDotNet3": "3.0.2"
@@ -14,6 +14,19 @@
           "lib/net48/LemonUI.SHVDN3.dll": {}
         }
       },
+      "LiteDB/5.0.9": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net45/LiteDB.dll": {}
+        },
+        "runtime": {
+          "lib/net45/LiteDB.dll": {}
+        }
+      },
       "Newtonsoft.Json/12.0.3": {
         "type": "package",
         "compile": {
@@ -21,6 +34,18 @@
         },
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Newtonsoft.Json.Bson/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.1"
+        },
+        "compile": {
+          "lib/net45/Newtonsoft.Json.Bson.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.Bson.dll": {}
         }
       },
       "NLog/4.7.5": {
@@ -44,7 +69,7 @@
           "lib/net45/NLog.dll": {}
         }
       },
-      "NLog.Schema/4.7.4": {
+      "NLog.Schema/4.7.7": {
         "type": "package",
         "contentFiles": {
           "contentFiles/any/any/NLog.xsd": {
@@ -54,7 +79,24 @@
           }
         }
       },
-      "ScriptHookVDotNet3/3.0.4": {
+      "PlayerCompanion/1.0.1": {
+        "type": "package",
+        "dependencies": {
+          "LemonUI.SHVDN3": "1.2.0",
+          "Newtonsoft.Json": "12.0.3",
+          "ScriptHookVDotNet3": "3.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Windows.Forms"
+        ],
+        "compile": {
+          "lib/net48/PlayerCompanion.dll": {}
+        },
+        "runtime": {
+          "lib/net48/PlayerCompanion.dll": {}
+        }
+      },
+      "ScriptHookVDotNet3/3.1.0": {
         "type": "package",
         "compile": {
           "lib/net48/ScriptHookVDotNet3.dll": {}
@@ -75,7 +117,7 @@
       }
     },
     ".NETFramework,Version=v4.8/win": {
-      "LemonUI.SHVDN3/1.0.0": {
+      "LemonUI.SHVDN3/1.2.0": {
         "type": "package",
         "dependencies": {
           "ScriptHookVDotNet3": "3.0.2"
@@ -87,6 +129,19 @@
           "lib/net48/LemonUI.SHVDN3.dll": {}
         }
       },
+      "LiteDB/5.0.9": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net45/LiteDB.dll": {}
+        },
+        "runtime": {
+          "lib/net45/LiteDB.dll": {}
+        }
+      },
       "Newtonsoft.Json/12.0.3": {
         "type": "package",
         "compile": {
@@ -94,6 +149,18 @@
         },
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Newtonsoft.Json.Bson/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.1"
+        },
+        "compile": {
+          "lib/net45/Newtonsoft.Json.Bson.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.Bson.dll": {}
         }
       },
       "NLog/4.7.5": {
@@ -117,7 +184,7 @@
           "lib/net45/NLog.dll": {}
         }
       },
-      "NLog.Schema/4.7.4": {
+      "NLog.Schema/4.7.7": {
         "type": "package",
         "contentFiles": {
           "contentFiles/any/any/NLog.xsd": {
@@ -127,7 +194,24 @@
           }
         }
       },
-      "ScriptHookVDotNet3/3.0.4": {
+      "PlayerCompanion/1.0.1": {
+        "type": "package",
+        "dependencies": {
+          "LemonUI.SHVDN3": "1.2.0",
+          "Newtonsoft.Json": "12.0.3",
+          "ScriptHookVDotNet3": "3.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Windows.Forms"
+        ],
+        "compile": {
+          "lib/net48/PlayerCompanion.dll": {}
+        },
+        "runtime": {
+          "lib/net48/PlayerCompanion.dll": {}
+        }
+      },
+      "ScriptHookVDotNet3/3.1.0": {
         "type": "package",
         "compile": {
           "lib/net48/ScriptHookVDotNet3.dll": {}
@@ -148,7 +232,7 @@
       }
     },
     ".NETFramework,Version=v4.8/win-x64": {
-      "LemonUI.SHVDN3/1.0.0": {
+      "LemonUI.SHVDN3/1.2.0": {
         "type": "package",
         "dependencies": {
           "ScriptHookVDotNet3": "3.0.2"
@@ -160,6 +244,19 @@
           "lib/net48/LemonUI.SHVDN3.dll": {}
         }
       },
+      "LiteDB/5.0.9": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net45/LiteDB.dll": {}
+        },
+        "runtime": {
+          "lib/net45/LiteDB.dll": {}
+        }
+      },
       "Newtonsoft.Json/12.0.3": {
         "type": "package",
         "compile": {
@@ -167,6 +264,18 @@
         },
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Newtonsoft.Json.Bson/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.1"
+        },
+        "compile": {
+          "lib/net45/Newtonsoft.Json.Bson.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.Bson.dll": {}
         }
       },
       "NLog/4.7.5": {
@@ -190,7 +299,7 @@
           "lib/net45/NLog.dll": {}
         }
       },
-      "NLog.Schema/4.7.4": {
+      "NLog.Schema/4.7.7": {
         "type": "package",
         "contentFiles": {
           "contentFiles/any/any/NLog.xsd": {
@@ -200,7 +309,24 @@
           }
         }
       },
-      "ScriptHookVDotNet3/3.0.4": {
+      "PlayerCompanion/1.0.1": {
+        "type": "package",
+        "dependencies": {
+          "LemonUI.SHVDN3": "1.2.0",
+          "Newtonsoft.Json": "12.0.3",
+          "ScriptHookVDotNet3": "3.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Windows.Forms"
+        ],
+        "compile": {
+          "lib/net48/PlayerCompanion.dll": {}
+        },
+        "runtime": {
+          "lib/net48/PlayerCompanion.dll": {}
+        }
+      },
+      "ScriptHookVDotNet3/3.1.0": {
         "type": "package",
         "compile": {
           "lib/net48/ScriptHookVDotNet3.dll": {}
@@ -221,7 +347,7 @@
       }
     },
     ".NETFramework,Version=v4.8/win-x86": {
-      "LemonUI.SHVDN3/1.0.0": {
+      "LemonUI.SHVDN3/1.2.0": {
         "type": "package",
         "dependencies": {
           "ScriptHookVDotNet3": "3.0.2"
@@ -233,6 +359,19 @@
           "lib/net48/LemonUI.SHVDN3.dll": {}
         }
       },
+      "LiteDB/5.0.9": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net45/LiteDB.dll": {}
+        },
+        "runtime": {
+          "lib/net45/LiteDB.dll": {}
+        }
+      },
       "Newtonsoft.Json/12.0.3": {
         "type": "package",
         "compile": {
@@ -240,6 +379,18 @@
         },
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Newtonsoft.Json.Bson/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.1"
+        },
+        "compile": {
+          "lib/net45/Newtonsoft.Json.Bson.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.Bson.dll": {}
         }
       },
       "NLog/4.7.5": {
@@ -263,7 +414,7 @@
           "lib/net45/NLog.dll": {}
         }
       },
-      "NLog.Schema/4.7.4": {
+      "NLog.Schema/4.7.7": {
         "type": "package",
         "contentFiles": {
           "contentFiles/any/any/NLog.xsd": {
@@ -273,7 +424,24 @@
           }
         }
       },
-      "ScriptHookVDotNet3/3.0.4": {
+      "PlayerCompanion/1.0.1": {
+        "type": "package",
+        "dependencies": {
+          "LemonUI.SHVDN3": "1.2.0",
+          "Newtonsoft.Json": "12.0.3",
+          "ScriptHookVDotNet3": "3.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Windows.Forms"
+        ],
+        "compile": {
+          "lib/net48/PlayerCompanion.dll": {}
+        },
+        "runtime": {
+          "lib/net48/PlayerCompanion.dll": {}
+        }
+      },
+      "ScriptHookVDotNet3/3.1.0": {
         "type": "package",
         "compile": {
           "lib/net48/ScriptHookVDotNet3.dll": {}
@@ -295,17 +463,37 @@
     }
   },
   "libraries": {
-    "LemonUI.SHVDN3/1.0.0": {
-      "sha512": "4WZePaPWTq1Y5DMBInEYlBofOWGCAeU/0Y4w59sUuPK4Og7pcyN7HHiv9v+k4QztWh7fBuB3jYHUXgnpBIqDjA==",
+    "LemonUI.SHVDN3/1.2.0": {
+      "sha512": "6TVP4LNy4Ye4lwlZkSVh9m27Bymfma2KmSvP0SBg3ZPvrVqEpATFDyoAaq/5dERFzlwq/bbkwK0+hiSwmpH16Q==",
       "type": "package",
-      "path": "lemonui.shvdn3/1.0.0",
+      "path": "lemonui.shvdn3/1.2.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lemonui.shvdn3.1.0.0.nupkg.sha512",
+        "lemonui.shvdn3.1.2.0.nupkg.sha512",
         "lemonui.shvdn3.nuspec",
         "lib/net48/LemonUI.SHVDN3.dll",
         "lib/net48/LemonUI.SHVDN3.xml"
+      ]
+    },
+    "LiteDB/5.0.9": {
+      "sha512": "cWnNWXL+qaP/qrkUCYZHBUJcv+IsfJfofa+Ed4EyT0zs/gkXqfKvjTbS3uSMBfcd9I7Yf+q9YPmCpmVFrVGQtw==",
+      "type": "package",
+      "path": "litedb/5.0.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "AppVeyorSettings.json",
+        "LICENSE",
+        "icon_64x64.png",
+        "lib/net45/LiteDB.dll",
+        "lib/net45/LiteDB.xml",
+        "lib/netstandard1.3/LiteDB.dll",
+        "lib/netstandard1.3/LiteDB.xml",
+        "lib/netstandard2.0/LiteDB.dll",
+        "lib/netstandard2.0/LiteDB.xml",
+        "litedb.5.0.9.nupkg.sha512",
+        "litedb.nuspec"
       ]
     },
     "Newtonsoft.Json/12.0.3": {
@@ -337,6 +525,27 @@
         "newtonsoft.json.12.0.3.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
+      ]
+    },
+    "Newtonsoft.Json.Bson/1.0.2": {
+      "sha512": "QYFyxhaABwmq3p/21VrZNYvCg3DaEoN/wUuw5nmfAf0X3HLjgupwhkEWdgfb9nvGAUIv3osmZoD3kKl4jxEmYQ==",
+      "type": "package",
+      "path": "newtonsoft.json.bson/1.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net45/Newtonsoft.Json.Bson.dll",
+        "lib/net45/Newtonsoft.Json.Bson.pdb",
+        "lib/net45/Newtonsoft.Json.Bson.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.Bson.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.Bson.pdb",
+        "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.Bson.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.Bson.pdb",
+        "lib/netstandard2.0/Newtonsoft.Json.Bson.xml",
+        "newtonsoft.json.bson.1.0.2.nupkg.sha512",
+        "newtonsoft.json.bson.nuspec"
       ]
     },
     "NLog/4.7.5": {
@@ -372,29 +581,42 @@
         "nlog.nuspec"
       ]
     },
-    "NLog.Schema/4.7.4": {
-      "sha512": "HikJv+HJHbpjWHSykV5rd6QEIAnC4gZEoHTkJjeyxICTyzW6BDZWv4tosdvdHZ+CJAphiAcWE9d6Mszx3mwO6Q==",
+    "NLog.Schema/4.7.7": {
+      "sha512": "qaRZ1CS8Dqq1B4HsnXt3+6K2mPjiTDb/SkDkNGbivSwXSk1ioUcmg5YgD7dO8zKJTvjWKTQcXNjHGiKpUoI8Ow==",
       "type": "package",
-      "path": "nlog.schema/4.7.4",
+      "path": "nlog.schema/4.7.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "content/NLog.xsd",
         "contentFiles/any/any/NLog.xsd",
-        "nlog.schema.4.7.4.nupkg.sha512",
+        "nlog.schema.4.7.7.nupkg.sha512",
         "nlog.schema.nuspec"
       ]
     },
-    "ScriptHookVDotNet3/3.0.4": {
-      "sha512": "SifJ+/asWEEgP9pzLhH2Z7x4R/16PzdgS/JTCf1/Z5BqFokKFcg8DmNofm7hlXPa0P1+L1aXX9V5LxzJgbF8hw==",
+    "PlayerCompanion/1.0.1": {
+      "sha512": "K/UuYXDXkJMtW5uUVZ1L55h96VuTlXMJxUYFuayPUOR5uHEmaTJSew8UzdvpdEAjhp7cEcNFIYbMCe0Imm28Ug==",
       "type": "package",
-      "path": "scripthookvdotnet3/3.0.4",
+      "path": "playercompanion/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net48/PlayerCompanion.dll",
+        "lib/net48/PlayerCompanion.xml",
+        "playercompanion.1.0.1.nupkg.sha512",
+        "playercompanion.nuspec"
+      ]
+    },
+    "ScriptHookVDotNet3/3.1.0": {
+      "sha512": "a+B/VTvssimqRDYEOeKbuSKt6JEgsM64kdiJF7CTVGXivDBJ6GRG453icpa5IIVmb+htJqu9TA1eGo+8p86MAg==",
+      "type": "package",
+      "path": "scripthookvdotnet3/3.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/net48/ScriptHookVDotNet3.dll",
         "lib/net48/ScriptHookVDotNet3.xml",
-        "scripthookvdotnet3.3.0.4.nupkg.sha512",
+        "scripthookvdotnet3.3.1.0.nupkg.sha512",
         "scripthookvdotnet3.nuspec"
       ]
     },
@@ -407,11 +629,14 @@
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
       "CommandPlus >= 0.1.1",
-      "LemonUI.SHVDN3 >= 1.0.0",
+      "LemonUI.SHVDN3 >= 1.2.0",
+      "LiteDB >= 5.0.9",
       "NLog >= 4.7.5",
-      "NLog.Schema >= 4.7.4",
+      "NLog.Schema >= 4.7.7",
       "Newtonsoft.Json >= 12.0.3",
-      "ScriptHookVDotNet3 >= 3.0.4"
+      "Newtonsoft.Json.Bson >= 1.0.2",
+      "PlayerCompanion >= 1.0.1",
+      "ScriptHookVDotNet3 >= 3.1.0"
     ]
   },
   "packageFolders": {
@@ -436,8 +661,10 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Users\\Ender\\AppData\\Roaming\\Cosmos User Kit\\packages\\": {},
         "https://api.nuget.org/v3/index.json": {},
-        "https://mirrors.huaweicloud.com/repository/nuget/v3/index.json": {}
+        "https://mirrors.huaweicloud.com/repository/nuget/v3/index.json": {},
+        "https://www.nuget.org/api/v2/": {}
       },
       "frameworks": {
         "net48": {
@@ -454,7 +681,11 @@
         "dependencies": {
           "LemonUI.SHVDN3": {
             "target": "Package",
-            "version": "[1.0.0, )"
+            "version": "[1.2.0, )"
+          },
+          "LiteDB": {
+            "target": "Package",
+            "version": "[5.0.9, )"
           },
           "NLog": {
             "target": "Package",
@@ -462,15 +693,23 @@
           },
           "NLog.Schema": {
             "target": "Package",
-            "version": "[4.7.4, )"
+            "version": "[4.7.7, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[12.0.3, )"
           },
+          "Newtonsoft.Json.Bson": {
+            "target": "Package",
+            "version": "[1.0.2, )"
+          },
+          "PlayerCompanion": {
+            "target": "Package",
+            "version": "[1.0.1, )"
+          },
           "ScriptHookVDotNet3": {
             "target": "Package",
-            "version": "[3.0.4, )"
+            "version": "[3.1.0, )"
           }
         }
       }

@@ -9,12 +9,14 @@ using NoArtifactLights.Engine.Entities.Structures;
 
 namespace NoArtifactLights.Engine.Mod.Controller
 {
+	[Obsolete]
 	internal class WeaponSavingController
 	{
 		private static readonly Logger logger = LogManager.GetLogger("WeaponSavingController");
 
 		List<SaveWeapon> savedWeapons = new List<SaveWeapon>();
 
+		[Obsolete]
 		internal void RegisterWeapon(WeaponHash hash)
 		{
 			// does nothing if no weapon found in inventory
@@ -54,6 +56,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			savedWeapons.Add(result);
 		}
 
+		[Obsolete]
 		internal void GiveAndRegisterWeapon(WeaponHash hash, int ammo, bool equipNow)
 		{
 			Game.Player.Character.Weapons.Give(hash, ammo, equipNow, true);

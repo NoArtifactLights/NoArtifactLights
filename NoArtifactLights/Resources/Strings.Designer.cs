@@ -47,8 +47,8 @@ namespace NoArtifactLights.Resources {
         }
         
         /// <summary>
-        ///   重写当前线程的 CurrentUICulture 属性
-        ///   重写当前线程的 CurrentUICulture 属性。
+        ///   重写当前线程的 CurrentUICulture 属性，对
+        ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         public static global::System.Globalization.CultureInfo Culture {
@@ -718,6 +718,33 @@ namespace NoArtifactLights.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Load 的本地化字符串。
+        /// </summary>
+        public static string MenuLoadHeader {
+            get {
+                return ResourceManager.GetString("MenuLoadHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Loads the game status from this slot. 的本地化字符串。
+        /// </summary>
+        public static string MenuLoadItemSubtitle {
+            get {
+                return ResourceManager.GetString("MenuLoadItemSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 LOAD GAME 的本地化字符串。
+        /// </summary>
+        public static string MenuLoadSubtitle {
+            get {
+                return ResourceManager.GetString("MenuLoadSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Main Menu 的本地化字符串。
         /// </summary>
         public static string MenuMainTitle {
@@ -750,6 +777,33 @@ namespace NoArtifactLights.Resources {
         public static string MenuModel {
             get {
                 return ResourceManager.GetString("MenuModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Save 的本地化字符串。
+        /// </summary>
+        public static string MenuSaveHeader {
+            get {
+                return ResourceManager.GetString("MenuSaveHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Slot {0} 的本地化字符串。
+        /// </summary>
+        public static string MenuSaveItem {
+            get {
+                return ResourceManager.GetString("MenuSaveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Saves the current game status to this slot. 的本地化字符串。
+        /// </summary>
+        public static string MenuSaveItemSubtitle {
+            get {
+                return ResourceManager.GetString("MenuSaveItemSubtitle", resourceCulture);
             }
         }
         
