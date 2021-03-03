@@ -155,10 +155,10 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			World.Weather = sf.Status.CurrentWeather;
 			World.CurrentTimeOfDay = new TimeSpan(sf.Status.Hour, sf.Status.Minute, 0);
 			Function.Call(Hash.SET_ARTIFICIAL_LIGHTS_STATE, sf.Blackout);
-			Common.blackout = sf.Blackout;
+			Common.Blackout = sf.Blackout;
 			Game.Player.Character.Position = new GTA.Math.Vector3(sf.PlayerX, sf.PlayerY, sf.PlayerZ);
-			Common.counter = sf.Kills;
-			Common.difficulty = sf.CurrentDifficulty;
+			Common.Kills = sf.Kills;
+			Common.CurrentDifficulty = sf.CurrentDifficulty;
 			GameController.SetRelationship(sf.CurrentDifficulty);
 			Game.Player.Character.Weapons.RemoveAll();
 			Game.Player.Character.Weapons.Give(WeaponHash.Flashlight, 1, false, true);
@@ -181,8 +181,8 @@ namespace NoArtifactLights.Engine.Mod.Controller
 				PlayerY = Game.Player.Character.Position.Y,
 				PlayerZ = Game.Player.Character.Position.Z,
 				Blackout = blackout,
-				Kills = Common.counter,
-				CurrentDifficulty = Common.difficulty,
+				Kills = Common.Kills,
+				CurrentDifficulty = Common.CurrentDifficulty,
 				PlayerHealth = Game.Player.Character.Health,
 				PlayerArmor = Game.Player.Character.Armor,
 				PlayerHungry = HungryController.Hungry,

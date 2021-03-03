@@ -1,12 +1,8 @@
 ﻿// NoArtifactLights
 // (C) RelaperCrystal and contributors. Licensed under GPLv3 or later.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CommandPlus.Commanding;
+using NoArtifactLights.Cilent;
 
 namespace NoArtifactLights.Engine.Mod.Commands
 {
@@ -14,7 +10,7 @@ namespace NoArtifactLights.Engine.Mod.Commands
 	{
 		public override void Executed(object[] arguments)
 		{
-			Entry.Process.SetForceStart();
+			GameProcess.SetForceStart();
 		}
 	}
 }

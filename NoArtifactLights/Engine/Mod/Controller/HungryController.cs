@@ -44,7 +44,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 				hinted = true;
 				GameUI.DisplayHelp(Strings.WaterTooLow);
 			}
-			if (Water <= 1.5f && !(Water <= 0.5f)) Game.Player.Character.Health -= 1;
+			if (Water <= 1.5f && (Water > 0.5f)) Game.Player.Character.Health--;
 			if (Water <= 0.5f) Game.Player.Character.Health -= 10;
 
 			if (Water != 0f)
@@ -74,12 +74,6 @@ namespace NoArtifactLights.Engine.Mod.Controller
 			return result;
 		}
 
-		private static void RefillWaterBySale(int price)
-		{
-			if (!Common.Cost(price)) return;
-			RefillWater();
-		}
-
 		internal static void AddHungry(Foods food, float amount)
 		{
 			float buffer = Hungry;
@@ -93,10 +87,9 @@ namespace NoArtifactLights.Engine.Mod.Controller
 
 		internal static void AlterHungry(int value)
 		{
-			float buffer = Hungry;
-			buffer = value;
-			if (buffer > 10.0f) buffer = 10.0f;
-			if (buffer < 0f) buffer = 0f;
+			float buffer = 0f;
+			if (value > 10.0f) buffer = 10.0f;
+			if (value < 0f) buffer = 0f;
 			Hungry = buffer;
 		}
 
@@ -133,7 +126,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 				hinted = true;
 				GameUI.DisplayHelp(Strings.Hungry);
 			}
-			if (Hungry <= 1.5f && !(Hungry <= 0.5f)) Game.Player.Character.Health -= 1;
+			if (Hungry <= 1.5f && (Hungry > 0.5f)) Game.Player.Character.Health -= 1;
 			if (Hungry <= 0.5f) Game.Player.Character.Health -= 10;
 
 			if(Hungry != 0f)

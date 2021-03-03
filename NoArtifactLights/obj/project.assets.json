@@ -664,6 +664,7 @@
         "C:\\Users\\Ender\\AppData\\Roaming\\Cosmos User Kit\\packages\\": {},
         "https://api.nuget.org/v3/index.json": {},
         "https://mirrors.huaweicloud.com/repository/nuget/v3/index.json": {},
+        "https://www.myget.org/F/noartifactlights/api/v3/index.json": {},
         "https://www.nuget.org/api/v2/": {}
       },
       "frameworks": {

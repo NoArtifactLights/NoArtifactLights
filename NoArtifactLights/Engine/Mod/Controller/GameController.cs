@@ -98,7 +98,7 @@ namespace NoArtifactLights.Engine.Mod.Controller
 				ped.CurrentVehicle.SoundHorn(1000);
 				ped.Task.LeaveVehicle();
 			}
-			switch (Common.difficulty)
+			switch (Common.CurrentDifficulty)
 			{
 				case Difficulty.Easy:
 					wp = WeaponHash.PumpShotgun;

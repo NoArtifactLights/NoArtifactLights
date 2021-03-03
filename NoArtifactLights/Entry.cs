@@ -16,32 +16,38 @@ using System.Collections.Generic;
 using System.Threading;
 using NoArtifactLights.Cilent;
 using System.Reflection;
+using PlayerCompanion;
+using System.Drawing;
+using Configuration = NoArtifactLights.Engine.Entities.Configuration;
 
 namespace NoArtifactLights
 {
 	[ScriptAttributes(Author = "RelaperCrystal")]
 	public class Entry : Script
 	{
-		internal static HandleableList peds1 = new HandleableList();
-		internal static HandleableList killedPeds = new HandleableList();
-		internal static HandleableList weaponedPeds = new HandleableList();
+		internal static readonly HandleableList peds1 = new HandleableList();
+		internal static readonly HandleableList killedPeds = new HandleableList();
+		internal static readonly HandleableList weaponedPeds = new HandleableList();
 
-		internal static List<Blip> blips = new List<Blip>();
+		internal static readonly List<Blip> blips = new List<Blip>();
 
 		private static readonly Logger logger = LogManager.GetLogger("Entry");
-		internal static bool forcestart;
 
 		public static GameProcess Process { get; private set; }
-
-		public static void ForceStartEvent()
-		{
-			forcestart = true;
-		}
 
 		public void LoadMod()
 		{
 			try
 			{
+				Configuration.LoadConfiguration(this.Settings);
+
+				if (Configuration.FirstSetup)
+				{
+					Companion.Colors.Current = Color.SpringGreen;
+					Configuration.CompleteFirstSetup();
+					Configuration.SaveConfiguration(this.Settings);
+				}
+
 				Thread.CurrentThread.Name = "main";
 				Screen.FadeOut(1000);
 				logger.Info("Starting NAL");
@@ -88,10 +94,12 @@ namespace NoArtifactLights
 			GameController.SetRelationshipBetGroupsUInt(Relationship.Pedestrians, 0x02B8FA80, 0x47033600);
 			GameController.SetRelationshipBetGroupsUInt(Relationship.Pedestrians, 0x47033600, 0x02B8FA80);
 
-			foreach (Blip blip in blips)
+			foreach (var blip in blips)
 			{
 				if (blip.Exists())
-				blip.Delete();
+				{
+					blip.Delete();
+				}
 			}
 		}
 	}

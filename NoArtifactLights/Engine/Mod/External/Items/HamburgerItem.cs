@@ -9,21 +9,14 @@ using PlayerCompanion;
 
 namespace NoArtifactLights.Engine.Mod.External.Items
 {
-	public class HamburgerItem : StackableItem
+	public class HamburgerItem : FoodItem
 	{
-		public HamburgerItem()
+		public HamburgerItem() : base(Foods.Hamburger, 1.5f)
 		{
-			this.Used += HamburgerItem_Used;
 		}
 
 		public override string Name => Strings.FoodBurger;
 
 		public override ScaledTexture Icon => new ScaledTexture("", "");
-
-		private void HamburgerItem_Used(object sender, EventArgs e)
-		{
-			HungryController.AddHungry(Foods.Hamburger, 1f);
-			this.Count--;
-		}
 	}
 }

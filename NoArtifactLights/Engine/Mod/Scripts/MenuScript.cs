@@ -16,7 +16,6 @@ using System.Drawing;
 using LemonUI;
 using LemonUI.Menus;
 using LemonUI.TimerBars;
-using System.Threading;
 using CommandPlus.Exceptions;
 
 namespace NoArtifactLights.Engine.Mod.Scripts
@@ -24,6 +23,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 	[ScriptAttributes(Author = "RelaperCrystal", SupportURL = "https://hotworkshop.atlassian.net/projects/NAL")]
 	public class MenuScript : Script
 	{
+#pragma warning disable S1450 // Private fields only used as local variables in methods should become local variables
 		private ObjectPool lemonPool;
 		private NativeMenu mainMenu;
 		private NativeItem itemSave;
@@ -59,7 +59,9 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		private NativeMenu foodMenu;
 		private NativeItem itemChicken;
 		private NativeItem itemHamburger;
+
 		private NativeItem itemWater;
+#pragma warning restore S1450 // Private fields only used as local variables in methods should become local variables
 
 		private Blip repairBlip;
 
@@ -68,16 +70,16 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		internal TimerBarProgress waterBar = new TimerBarProgress(Strings.BarWater);
 		private Vector3 repair = new Vector3(140.683f, -1081.387f, 28.56039f);
 
-		internal static MenuScript instance;
+		internal static MenuScript Instance { get; private set; }
 
 		internal static void ChangeHungryBarColor(Color cl)
 		{
-			instance.hungryBar.ForegroundColor = cl;
+			Instance.hungryBar.ForegroundColor = cl;
 		}
 
 		internal static void ChangeWaterBarColor(Color cl)
 		{
-			instance.waterBar.ForegroundColor = cl;
+			Instance.waterBar.ForegroundColor = cl;
 		}
 
 		private static readonly NLog.Logger logger = LogManager.GetLogger("MenuScript");
@@ -91,7 +93,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		{
 			try
 			{
-				//Thread.CurrentThread.Name = "UI Thread";
 				logger.Trace("Loading Main Menu");
 				lemonPool = new ObjectPool();
 				logger.Trace("Menu Pool created");
@@ -101,8 +102,6 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				mainMenu = new NativeMenu("NAL", Strings.MenuMainTitle);
 #endif
 				itemLights = new NativeCheckboxItem(Strings.ItemLightsTitle, Strings.ItemLightsSubtitle, true);
-				//itemSave = new NativeItem(Strings.ItemSaveTitle, Strings.ItemSaveSubtitle);
-				//itemLoad = new NativeItem(Strings.ItemLoadTitle, Strings.ItemLoadSubtitle);
 				itemCallCops = new NativeItem(Strings.ItemCopsTitle, Strings.ItemCopsSubtitle);
 				itemDifficulty = new NativeItem(Strings.ItemDifficulty, Strings.ItemDIfficultySubtitle);
 				itemKills = new NativeItem(Strings.ItemKills, Strings.ItemKillsSubtitle);
@@ -124,9 +123,9 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				itemSaveSlot2 = new NativeItem(string.Format(Strings.MenuSaveItem, 2), Strings.MenuSaveItemSubtitle);
 				itemSaveSlot3 = new NativeItem(string.Format(Strings.MenuSaveItem, 3), Strings.MenuSaveItemSubtitle);
 
-				itemSaveSlot1.Activated += (menu, i) => SaveController.Save(Common.blackout, 1);
-				itemSaveSlot2.Activated += (menu, i) => SaveController.Save(Common.blackout, 2);
-				itemSaveSlot3.Activated += (menu, i) => SaveController.Save(Common.blackout, 3);
+				itemSaveSlot1.Activated += (menu, i) => SaveController.Save(Common.Blackout, 1);
+				itemSaveSlot2.Activated += (menu, i) => SaveController.Save(Common.Blackout, 2);
+				itemSaveSlot3.Activated += (menu, i) => SaveController.Save(Common.Blackout, 3);
 
 				saveMenu.Add(itemSaveSlot1);
 				saveMenu.Add(itemSaveSlot2);
@@ -224,7 +223,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 				repairBlip.Name = Strings.RepairBlip;
 
 				HungryController.AddBlipsToAllResellers();
-				instance = this;
+				Instance = this;
 
 				this.Aborted += MenuScript_Aborted;
 				CommandController.Init();
@@ -235,7 +234,7 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 			{
 				GameUI.DisplayHelp(Strings.ExceptionMenu);
 				logger.Fatal(ex, "Error while loading menu");
-				Common.UnloadMod(this);
+				Common.UnloadMod();
 				this.Abort();
 			}
 		}
@@ -276,16 +275,14 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 		private void ItemCopModel_Activated(object sender, EventArgs args)
 		{
 			Game.Player.ChangeModel("s_m_y_cop_01");
-			//selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Clothes);
-			//itemDefaultModel.SetRightBadge(UIMenuItem.BadgeStyle.None);
+
 			itemSave.Enabled = false;
 		}
 
 		private void ItemDefaultModel_Activated(object sender, EventArgs args)
 		{
 			Game.Player.ChangeModel("a_m_m_bevhills_02");
-			//selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Clothes);
-			//itemCopModel.SetRightBadge(UIMenuItem.BadgeStyle.None);
+
 			itemSave.Enabled = false;
 		}
 
@@ -365,8 +362,8 @@ namespace NoArtifactLights.Engine.Mod.Scripts
 			{
 				case Keys.N:
 					mainMenu.Visible = !mainMenu.Visible;
-					itemDifficulty.AltTitle = Strings.ResourceManager.GetString("Difficulty" + Common.difficulty.ToString());
-					itemKills.AltTitle = Common.counter.ToString();
+					itemDifficulty.AltTitle = Strings.ResourceManager.GetString("Difficulty" + Common.CurrentDifficulty.ToString());
+					itemKills.AltTitle = Common.Kills.ToString();
 					break;
 				case Keys.E:
 					if (mainMenu.Visible) return;

@@ -1,26 +1,25 @@
 ﻿// NoArtifactLights
 // (C) RelaperCrystal and contributors. Licensed under GPLv3 or later.
 
-using LemonUI.Elements;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using NoArtifactLights.Engine.Mod.Controller;
-using NoArtifactLights.Resources;
 using PlayerCompanion;
 
 namespace NoArtifactLights.Engine.Mod.External.Items
 {
-	public class WaterItem : StackableItem
+	public abstract class FoodItem : StackableItem
 	{
-		public WaterItem()
+		protected FoodItem(Foods food, float amount)
 		{
 			this.Used += (sender, e) =>
 			{
-				HungryController.RefillWater();
+				HungryController.AddHungry(food, amount);
 				this.Count--;
 			};
 		}
-
-		public override string Name => Strings.ItemWater;
-
-		public override ScaledTexture Icon => new ScaledTexture("", "");
 	}
 }

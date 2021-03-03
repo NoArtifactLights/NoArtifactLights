@@ -4,7 +4,6 @@
 using GTA.UI;
 using NLog;
 using NoArtifactLights.Engine.Entities.Enums;
-using NoArtifactLights.Engine.Mod.Controller;
 using NoArtifactLights.Resources;
 using PlayerCompanion;
 using System;
@@ -13,35 +12,34 @@ namespace NoArtifactLights
 {
 	internal static class Common
 	{
-		internal static int counter = 0;
-		internal static Difficulty difficulty = Difficulty.Initial;
-		internal static bool blackout;
-		internal static NLog.Logger logger = LogManager.GetLogger("Common");
+		private static readonly Logger logger = LogManager.GetLogger("Common");
 		internal static event EventHandler Unload;
 
-		//internal static int intervalToRespawn;
+		public static Difficulty CurrentDifficulty { get; internal set; }
 
-		// internal static event EventHandler CashChanged;
+		[Obsolete("Use Player Companion instead.")]
+		public static int Cash { get; set; }
 
-		[Obsolete]
-		public static int Cash { get; set; } = 0;
+		[Obsolete("Use Player Companion instead.")]
+		public static int Bank { get; set; }
 
-		[Obsolete]
-		public static int Bank { get; set; } = 0;
+		public static int Kills { get; internal set; }
 
 		public static bool IsCheatEnabled { get; internal set; }
 
-		internal static void OnLaunch(object you)
+		public static bool Blackout { get; internal set; }
+
+		internal static void OnLaunch()
 		{
-			Start(you, EventArgs.Empty);
+			Start?.Invoke(null, EventArgs.Empty);
 		}
 
 		internal static event EventHandler Start;
 
-		internal static void UnloadMod(object you)
+		internal static void UnloadMod()
 		{
 			Notification.Show(Strings.Unload);
-			Unload(you, EventArgs.Empty);
+			Unload?.Invoke(null, EventArgs.Empty);
 		}
 
 		public static bool Cost(int amount)
@@ -67,6 +65,7 @@ namespace NoArtifactLights
 				Notification.Show(NotificationIcon.Blocked, "", "", Strings.CashMaximum);
 				return false;
 			}
+
 			Companion.Wallet.Money += amount;
 			return true;
 		}

@@ -18,16 +18,17 @@ namespace NoArtifactLights.Cilent
 {
 	public class GameProcess
 	{
-		internal static HandleableList peds1 = new HandleableList();
-		internal static HandleableList killedPeds = new HandleableList();
-		internal static HandleableList weaponedPeds = new HandleableList();
+
+		internal static readonly HandleableList peds1 = new HandleableList();
+		internal static readonly HandleableList killedPeds = new HandleableList();
+		internal static readonly HandleableList weaponedPeds = new HandleableList();
 
 		public Version Version { get; }
 		private static readonly Logger logger = LogManager.GetLogger("Client");
 
-		internal void SetForceStart()
+		internal static void SetForceStart()
 		{
-			// TODO
+			EventController.forceEvent = true;
 		}
 
 		public GameProcess(Version version)
@@ -47,7 +48,7 @@ namespace NoArtifactLights.Cilent
 
 			Functions.TriggerInitialize(this);
 
-			Common.OnLaunch(this);
+			Common.OnLaunch();
 			logger.Info("DONE! Client construction took " + sw.ElapsedMilliseconds + " ms");
 		}
 
@@ -55,8 +56,7 @@ namespace NoArtifactLights.Cilent
 		{
 			try
 			{
-				Ped[] peds = World.GetAllPeds();
-				foreach (Ped ped in peds)
+				foreach (var ped in World.GetAllPeds())
 				{
 					if (ped == null)
 					{
@@ -73,7 +73,7 @@ namespace NoArtifactLights.Cilent
 							Common.Earn(new Random().Next(4, 16));
 						}
 
-						Common.counter++;
+						Common.Kills++;
 						if (weaponedPeds.IsDuplicate(ped))
 						{
 							Common.Earn(50);
@@ -85,36 +85,32 @@ namespace NoArtifactLights.Cilent
 							}
 						}
 
-						switch (Common.counter)
+						switch (Common.Kills)
 						{
 							case 1:
 								GameUI.DisplayHelp(Strings.FirstKill);
 								break;
 
 							case 100:
-								Common.difficulty = Difficulty.Easy;
-								new BigMessage(Strings.DifficultyChange, string.Format(Strings.DifficultyShard, Strings.DifficultyEasy));
+								Common.CurrentDifficulty = Difficulty.Easy;
 								GameUI.DisplayHelp(string.Format(Strings.DifficultyHelp, Strings.DifficultyEasy));
 								GameController.SetRelationship(Difficulty.Easy);
 								break;
 
 							case 300:
-								Common.difficulty = Difficulty.Normal;
-								new BigMessage(Strings.DifficultyChange, string.Format(Strings.DifficultyShard, Strings.DifficultyNormal));
+								Common.CurrentDifficulty = Difficulty.Normal;
 								GameUI.DisplayHelp(string.Format(Strings.DifficultyHelp, Strings.DifficultyNormal));
 								GameController.SetRelationship(Difficulty.Normal);
 								break;
 
 							case 700:
-								Common.difficulty = Difficulty.Hard;
-								new BigMessage(Strings.DifficultyChange, string.Format(Strings.DifficultyShard, Strings.DifficultyHard));
+								Common.CurrentDifficulty = Difficulty.Hard;
 								GameUI.DisplayHelp(string.Format(Strings.DifficultyHelp, Strings.DifficultyHard));
 								GameController.SetRelationship(Difficulty.Hard);
 								break;
 
 							case 1500:
-								Common.difficulty = Difficulty.Nether;
-								new BigMessage(Strings.DifficultyChange, string.Format(Strings.DifficultyShard, Strings.DifficultyNether));
+								Common.CurrentDifficulty = Difficulty.Nether;
 								GameUI.DisplayHelp(string.Format(Strings.DifficultyHelp, Strings.DifficultyNether));
 								GameController.SetRelationship(Difficulty.Nether);
 								break;
